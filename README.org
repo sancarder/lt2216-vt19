@@ -1,4 +1,3 @@
-#+TITLE: Tutorial for lab environment
 * Overview
 You will have 4 labs:
 |   | Title                                              | Session | Prelim. deadline |
@@ -33,7 +32,7 @@ you can find the webapps, logs, etc.
 Static pages should be stored here: =/usr/local/voxeo/webapps/www/vt19=
 ** Dynamic files
 You can use Python to generate VoiceXML files. See the example in =/vxml-server= folder.
-* Creating applications in Voxeo
+* Managing applications in Voxeo
 Prophecy Commander: http://eduserv.flov.gu.se:9996
 
 "admin" / "adminadmin"
