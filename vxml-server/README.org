@@ -1,0 +1,6 @@
+* How to run VoiceXML server
+In your shell:
+#+BEGIN_SRC sh
+export FLASK_APP=app.py
+flask run
+#+END_SRC
