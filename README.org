@@ -21,7 +21,7 @@ You will have 4 labs:
 4. Try it out: set up your account and dial =vxml@eduserv.flov.gu.se=
 5. Check whether speech recognition is working
 
-** using phone (optional)
+** using the phone (optional)
 031 786 5902
    
 * Server access
@@ -38,3 +38,16 @@ Prophecy Commander: http://eduserv.flov.gu.se:9996
 
 - Docs: http://help.voxeo.com/go/help/prophecy.p18.prophecy
 - Prophecy-specific VoiceXML: http://help.voxeo.com/go/help/xml.vxml
+* Tips
+1. Set up a SSH key: 
+   - Generate the key with =ssh-keygen=: [[https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent][follow the GitHub guide]]
+   - Once an SSH key has been created, the =ssh-copy-id= command can be
+     used to install it as an authorized key on the server. (on
+     Windows this would be slightly trickier)
+2. SSH config (=~/.ssh/config=) is very handy:
+   #+BEGIN_SRC 
+   Host eduserv
+     HostName eduserv.flov.gu.se
+     User <your-gus-username>
+     LocalForward 8099 localhost:8099
+   #+END_SRC
