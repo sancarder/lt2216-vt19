@@ -33,6 +33,11 @@ you can find the webapps, logs, etc.
 Static pages should be stored here: =/usr/local/voxeo/webapps/www/vt19=
 ** dynamic files
 You can use Python to generate VoiceXML files. See the example in =/vxml-server= folder.
+In order to access the sever from your local web browser you will need to forward server's port. E.g.:
+#+BEGIN_SRC sh
+ssh -L8099:localhost:8099 eduserv.flov.gu.se
+#+END_SRC
+
 * Managing applications in Voxeo
 Prophecy Commander: http://eduserv.flov.gu.se:9996
 
