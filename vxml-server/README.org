@@ -1,4 +1,4 @@
-* How to run VoiceXML server
+* How to run web server
 In your shell:
 #+BEGIN_SRC sh
 export FLASK_APP=app.py

@@ -1,0 +1,63 @@
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+#+TITLE: Lab 1. Building a simple dialog system in VoiceXML
+
+#+BEGIN_EXAMPLE
+This version is preliminary and subject to change
+#+END_EXAMPLE
+* Preparatory tasks
+1. Make sure that your SIP phone works fine (see README)
+2. Fork this repository
+3. Clone your own repository (forked) a) to your local machine b) to the server
+4. Run flask (change the port to any number in the range 8000--8098)
+   #+BEGIN_SRC sh
+   export FLASK_APP=app.py
+   export FLASK_ENV=development
+   flask run --port 8099
+   #+END_SRC
+5. Create a new VXML application in Prophecy commander with your gus-name.
+   - Set the address to =your-gus-name= and URL to http://127.0.0.1:8099/lab1
+6. You can access your application via SIP: your-gus-name@eduserv.flov.gu.se
+  
+* Flight booking state machine
+
+* Assignment
+To make the assignment somewhat easier for you, and more importantly
+to push you in the right direction, I have prepared a script that
+implements three of the states in the state machine above. Here –
+=./vxml-server/templates/lab1.xml= study it, run it, and make sure you
+understand what is going on.
+
+** Part A
+1. Complete the implementation of the flight booking dialog
+   system. You need to add VoiceXML markup corresponding to the
+   remaining states. Note: you don't need to write the complete
+   grammar for dates (e.g. just use the weekdays), you will focus on
+   more sophisticated grammars in the following assignment.
+2. The error handling for the noinput and nomatch events can be
+   improved. In particular, it may be a good idea to tailor the error
+   messages to the questions being asked. For example, if the user
+   says "Berlin" in response to the question "Where are you going?",
+   it may be a good idea to give negative but constructive feedback
+   and say something like "I did not understand. You can say London,
+   Paris or New York.". Implementation tip: Use =<noinput>= and =<nomatch>=
+   event handlers as children of the =<field>= elements.
+3. One error that may arise is if someone tries to book a trip from
+   (say) London to London. In such cases, we may want the system to
+   say something like "The city that you are leaving and the city that
+   you are going to must be different". Implement this.
+4. By default, it takes 5 seconds in between the question and the
+   triggering of the noinput event if the user remains silent. Change
+   the timeout for at least one question.
+5. Barging in is enabled by default. Read about the =<prompt>=-element's
+   bargein attribute, and disable it for at least one question.
+
+** Part B
+1. Extend the design of the dialog system with a "welcome menu" that allows a user to choose between booking a flight and getting information about delayed flights. Use the =<menu>= element to implement the welcome menu. (The information about delayed flight could be just "All flight are on time.")
+2. Sometimes it makes a lot of sense to divide the code for the system up into different parts. To experiment with this, divide your code up into three parts: one document containing the menu, one document containing the booking dialog flow, and one document for the information about delayed flights.
+3. Implement a global start over functionality that allows the user to say "start over" at any time during the dialog. As a consequence, the dialog should start over, from the menu. Implement it by means of the =<link>= element.
+4. Implement any other improvement on your choice.
+
+** VG part
+1. Dial SIP number: 9990111860@sip.lhr.aspect-cloud.net
+2. Test flight booking application in an exhaustive way. Hint: the application understands utterances like "I want to go from Paris to London on February 19th" and also partial utterances like "I want to go from Paris".
+3. Write a test report (format of your choice) containing the list of errors and limitations, together with instructions how to reproduce them and your suggestions.
