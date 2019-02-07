@@ -20,7 +20,7 @@ This version is preliminary and subject to change
 6. You can access your application via SIP: your-gus-name@eduserv.flov.gu.se
   
 * Flight booking state machine
-[[./Figures/sds.png]]
+[[./Figures/flight-fsm.png]]
 
 * Assignment
 To make the assignment somewhat easier for you, and more importantly
