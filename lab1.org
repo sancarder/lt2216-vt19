@@ -20,7 +20,7 @@ This version is preliminary and subject to change
 6. You can access your application via SIP: your-gus-name@eduserv.flov.gu.se
   
 * Flight booking state machine
-[[./img/sm_lab2.png]]
+[[./Figures/sm_lab2.png]]
 
 * Assignment
 To make the assignment somewhat easier for you, and more importantly
@@ -29,8 +29,8 @@ implements three of the states in the state machine above. Here –
 =./vxml-server/templates/lab1.xml= study it, run it, and make sure you
 understand what is going on.
 
-- For G: do either parts A+B or A+C
-- For VG: do all three parts
+- for G :: do either parts A+B or A+C
+- for VG :: do all three parts
 
 ** Part A
 1. Complete the implementation of the flight booking dialog
