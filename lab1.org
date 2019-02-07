@@ -7,18 +7,20 @@ This version is preliminary and subject to change
 * Preparatory tasks
 1. Make sure that your SIP phone works fine (see README)
 2. Fork this repository
-3. Clone your own repository (forked) a) to your local machine b) to the server
-4. Run flask (change the port to any number in the range 8000--8098)
+3. Clone your own repository (forked): a) to your local machine b) to the server
+4. Run flask application on the server (change the port to any number
+   in the range 8000--8098)
    #+BEGIN_SRC sh
    export FLASK_APP=app.py
    export FLASK_ENV=development
    flask run --port 8099
    #+END_SRC
 5. Create a new VXML application in Prophecy commander with your gus-name.
-   - Set the address to =your-gus-name= and URL to http://127.0.0.1:8099/lab1
+   - Set the address to =your-gus-name= and URL to http://127.0.0.1:8099/lab1 (change the port)
 6. You can access your application via SIP: your-gus-name@eduserv.flov.gu.se
   
 * Flight booking state machine
+[[./img/sm_lab2.png]]
 
 * Assignment
 To make the assignment somewhat easier for you, and more importantly
@@ -26,6 +28,9 @@ to push you in the right direction, I have prepared a script that
 implements three of the states in the state machine above. Here –
 =./vxml-server/templates/lab1.xml= study it, run it, and make sure you
 understand what is going on.
+
+- For G: do either parts A+B or A+C
+- For VG: do all three parts
 
 ** Part A
 1. Complete the implementation of the flight booking dialog
@@ -50,14 +55,31 @@ understand what is going on.
    the timeout for at least one question.
 5. Barging in is enabled by default. Read about the =<prompt>=-element's
    bargein attribute, and disable it for at least one question.
+6. Extend the design of the dialog system with a "welcome menu" that
+   allows a user to choose between booking a flight and getting
+   information about delayed flights. Use the =<menu>= element to
+   implement the welcome menu. (The information about delayed flight
+   could be just "All flight are on time.")
 
 ** Part B
-1. Extend the design of the dialog system with a "welcome menu" that allows a user to choose between booking a flight and getting information about delayed flights. Use the =<menu>= element to implement the welcome menu. (The information about delayed flight could be just "All flight are on time.")
-2. Sometimes it makes a lot of sense to divide the code for the system up into different parts. To experiment with this, divide your code up into three parts: one document containing the menu, one document containing the booking dialog flow, and one document for the information about delayed flights.
-3. Implement a global start over functionality that allows the user to say "start over" at any time during the dialog. As a consequence, the dialog should start over, from the menu. Implement it by means of the =<link>= element.
-4. Implement any other improvement on your choice.
+1. Sometimes it makes a lot of sense to divide the code for the system
+   up into different parts. To experiment with this, divide your code
+   up into three parts: one document containing the menu, one document
+   containing the booking dialog flow, and one document for the
+   information about delayed flights.
+2. Implement a global start over functionality that allows the user to
+   say "start over" at any time during the dialog. As a consequence,
+   the dialog should start over, from the menu. Implement it by means
+   of the =<link>= element.
+3. Implement any other improvement on your choice.
 
-** VG part
+
+** Part C
 1. Dial SIP number: 9990111860@sip.lhr.aspect-cloud.net
-2. Test flight booking application in an exhaustive way. Hint: the application understands utterances like "I want to go from Paris to London on February 19th" and also partial utterances like "I want to go from Paris".
-3. Write a test report (format of your choice) containing the list of errors and limitations, together with instructions how to reproduce them and your suggestions.
+2. Test flight booking application in an exhaustive way. Hint: the
+   application understands utterances like "I want to go from Paris to
+   London on February 19th" and also partial utterances like "I want
+   to go from Paris".
+3. Write a test report (format of your choice) containing the list of
+   errors and limitations, together with instructions how to reproduce
+   them and your suggestions.
