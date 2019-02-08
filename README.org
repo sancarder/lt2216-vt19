@@ -23,7 +23,8 @@ You will have 4 labs:
 
 ** using the phone (optional)
 031 786 5902
-   
+
+Call routing app (under development): =/usr/local/voxeo/webapps/www/vt19/routing.xml= 
 * Server access
 eduserv.flov.gu.se (with your student account)
 ** static files
