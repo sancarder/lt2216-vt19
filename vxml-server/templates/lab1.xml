@@ -54,4 +54,31 @@
       <goto next="#askDate" />
     </filled>
   </form>
+
+  <form id="askLeaveDate">
+    <field name="leaveDateField">
+      <prompt>
+	What date do you want to leave?
+      </prompt>
+      <option>Monday</option>
+      <option>Tuesday></option>
+      <option>Wednesday></option>
+      <option>Thursday></option>
+      <option>Friday></option>
+    </field>
+    <filled>
+      <goto next="#askOneWay"/>
+    </filled>
+  </form>
+
+  <form id="askOneWay">
+    <field name="OneWayField">
+      <prompt>
+	Is it a one-way trip?
+      </prompt>
+      <option>Yes</option>
+      <option>No</option>
+    </field>
+  </form>
+
 </vxml>
