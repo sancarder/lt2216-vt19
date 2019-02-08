@@ -1,7 +1,7 @@
-* How to run VoiceXML server
+* How to run web server
 In your shell:
 #+BEGIN_SRC sh
 export FLASK_APP=app.py
 export FLASK_ENV=development
-flask run
+flask run --port 8099
 #+END_SRC

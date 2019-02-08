@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
+      xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
+  <nomatch>
+    I didn't understand.
+    <reprompt/>
+  </nomatch>
+  
+  <noinput>
+    You didn't say anything.
+    <reprompt/>
+  </noinput>
+
+  <!-- Data model -->
+  <var name="from" />
+  <var name="to" />
+
+  <!-- State machine -->
+  <form id="welcome">
+    <block>
+      <prompt>
+        <break time="2000" />
+        Welcome to the flight booking service.
+      </prompt>
+      <goto next="#askFrom" />
+    </block>
+  </form>
+
+  <form id="askFrom">
+    <field name="fromField">
+      <prompt>
+        What city are you leaving from?
+      </prompt>
+      <option>london</option>
+      <option>paris</option>
+      <option>new york</option>
+    </field>
+    <filled>
+      <assign name="from" expr="fromField" />
+      <goto next="#askTo" />
+    </filled>
+  </form>
+
+  <form id="askTo">
+    <field name="toField">
+      <prompt>
+        Where are you going?
+      </prompt>
+      <option>london</option>
+      <option>paris</option>
+      <option>new york</option>
+    </field>
+    <filled>
+      <goto next="#askDate" />
+    </filled>
+  </form>
+</vxml>
