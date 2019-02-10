@@ -10,15 +10,15 @@ def hello():
     response.headers["Content-Type"] = "application/xml"
     return response
 
-@app.route('/lab1partA')
+@app.route('/lab1')
 def lab1():
-    vxml = render_template('lab1partA.xml')
+    vxml = render_template('lab1.xml')
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
     return response
 
-@app.route('/lab1partB')
-def lab1():
+@app.route('/menu')
+def menu():
     vxml = render_template('menu.xml')
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
