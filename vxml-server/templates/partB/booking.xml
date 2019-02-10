@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1" application="menu.xml" xmlns="http://www.w3.org/2001/vxml"
+      xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
+
+    <link next="menu.xml">
+        <grammar xml:lang="en-US" root="LINKGRAM">
+            <rule id="LINKGRAM">
+                <one-of>
+                    <item>start over</item>                    
+                </one-of>
+            </rule>
+        </grammar>
+    </link>
+
+  <!-- Data model -->
+  <var name="from" />
+  <var name="to" />
+  <var name="date" />
+  <var name="return" />
+  
+  <!-- State machine -->
+  <form id="welcome">
+    <block>
+      <prompt>
+        <break time="2000" />
+        Welcome to the flight booking service.
+      </prompt>
+      <goto next="#askFrom" />
+    </block>
+  </form>
+
+  <form id="askFrom">
+    <field name="fromField">
+      <prompt>
+        What city are you leaving from?
+      </prompt>
+      
+      <grammar xml:lang="en-us" root="TOPLEVEL">
+          <rule id="TOPLEVEL">
+              <one-of>
+                  <item>London</item>
+                  <item>Paris</item>
+                  <item>New York</item>
+              </one-of>
+          </rule>
+      </grammar>
+      
+      <nomatch>
+          I didn't understand. You can say London, Paris or New York.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. Which city are you leaving from?
+          <reprompt/>
+      </noinput>
+      
+    </field>
+    <filled>
+      <assign name="from" expr="fromField" />
+      <goto next="#askTo" />
+    </filled>
+  </form>
+  
+  <form id="askTo">
+    <field name="toField">
+      <prompt>
+        Where are you going?
+      </prompt>
+
+      <grammar xml:lang="en-us" root="TOPLEVEL">
+          <rule id="TOPLEVEL">
+              <one-of>
+                  <item>London</item>
+                  <item>Paris</item>
+                  <item>New York</item>
+              </one-of>
+          </rule>
+      </grammar>
+      
+      <nomatch>
+          I didn't understand. You can say London, Paris or New York.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. Which city are you going to?
+          <reprompt/>
+      </noinput>      
+      
+    </field>
+    <filled>        
+      <assign name="to" expr="toField" />
+      <if cond="toField == fromField">
+        You can't go to the same city you are leaving. You are leaving <value expr="fromField">. Which city are you going to?          
+        </reprompt>
+      </if>              
+      <goto next="#askDate" />
+    </filled>
+  </form>
+
+  <form id="askLeaveDate">
+    <field name="leaveDateField">
+      <prompt timeout="8s">
+          What date do you want to leave?
+      </prompt>
+
+      <grammar xml:lang="en-us" root="TOPLEVEL">
+          <rule id="TOPLEVEL">
+              <one-of>
+                  <item>Monday</item>
+                  <item>Tuesday</item>
+                  <item>Wednesday</item>
+                  <item>Thursday</item>
+                  <item>Friday</item>                  
+              </one-of>
+          </rule>
+      </grammar>
+
+      <nomatch>
+          I didn't understand. You can say one of the day's week, for example Monday.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. What date do you want to leave?
+          <reprompt/>
+      </noinput>      
+      
+    </field>
+    <filled>
+      <assign name="date" expr="leaveDateField" />        
+      <goto next="#askOneWay"/>
+    </filled>
+  </form>
+
+  <form id="askOneWay">
+    <field name="OneWayField">
+      <prompt timeout="3s">
+          Is it a one-way trip?
+      </prompt>
+      
+      <grammar xml:lang="en-us" root="TOPLEVEL">
+          <rule id="TOPLEVEL">
+              <one-of>
+                  <item>Yes</item>
+                  <item>No</item>
+              </one-of>
+          </rule>
+      </grammar>
+      
+      <nomatch>
+          I didn't understand. You can just say Yes or No.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. Will this be a one-way trip?
+          <reprompt/>
+      </noinput>       
+      
+      <if cond="askOneWayField == 'Yes'">
+          <goto next="askOneWayConfirmation"/>
+          <else/>
+          <goto next="askReturnDate"/>
+      </if>
+    </field>
+  </form>
+  
+  <form id="askReturnDate">
+    <field name="returnDateField">
+      <prompt timeout="8s">
+          What date do you want to return?
+      </prompt>
+
+      <grammar xml:lang="en-us" root="TOPLEVEL">
+          <rule id="TOPLEVEL">
+              <one-of>
+                  <item>Monday</item>
+                  <item>Tuesday</item>
+                  <item>Wednesday</item>
+                  <item>Thursday</item>
+                  <item>Friday</item>                  
+              </one-of>
+          </rule>
+      </grammar>        
+
+      <nomatch>
+          I didn't understand. You can say one of the day's week, for example Monday.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. What date do you want to return?
+          <reprompt/>
+      </noinput> 
+      
+    </field>
+    <filled>
+      <assign name="return" expr="returnDateField" />        
+      <goto next="#askReturnTripConfirmation"/>
+    </filled>
+  </form>
+
+  <form id="askOneWayConfirmation">
+    <field name="OneWayConfirmationField">
+      <prompt bargein="False">
+          Do you want to go from <value expr="fromField"/> to <value expr="toField"/> on <value expr="leaveDateField"/>? 
+      </prompt>
+      
+      <grammar xml:lang="en-us" root="TOPLEVEL">
+          <rule id="TOPLEVEL">
+              <one-of>
+                  <item>Yes</item>
+                  <item>No</item>
+              </one-of>
+          </rule>
+      </grammar>      
+
+      <nomatch>
+          I didn't understand. You can just say Yes or No.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. Do you want to go from <value expr="fromField"/> to <value expr="toField"/> on <value expr="leaveDateField"/>? 
+          <reprompt/>
+      </noinput>   
+      
+      <if cond="OneWayConfirmationField == 'Yes'">
+          <goto next="#confirmFlight"/>
+          <else/>
+          <goto next="#askFrom"/>
+      </if>
+    </field>
+  </form>  
+  
+  <form id="askReturnTripConfirmation">
+    <field name="ReturnTripConfirmationField">
+      <prompt bargein="False">
+          Do you want to go from <value expr="fromField"/> to <value expr="toField"/> on <value expr="leaveDateField"/> returning on <value expr="returnDateField"/>? 
+      </prompt>
+      
+      <grammar xml:lang="en-us" root="TOPLEVEL">
+          <rule id="TOPLEVEL">
+              <one-of>
+                  <item>Yes</item>
+                  <item>No</item>
+              </one-of>
+          </rule>
+      </grammar>  
+      
+      <nomatch>
+          I didn't understand. You can just say Yes or No.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. Do you want to go from <value expr="fromField"/> to <value expr="toField"/> on <value expr="leaveDateField"/> returning on <value expr="returnDateField"/>?  
+          <reprompt/>
+      </noinput>        
+      
+      <if cond="ReturnTripConfirmationField == 'Yes'">
+          <goto next="#confirmFlight"/>
+          <else/>
+          <goto next="#askFrom"/>
+      </if>
+    </field>
+  </form>    
+  
+  <form id="confirmFlight">
+    <block>
+      <prompt>
+        <break time="2000" />
+        Your flight has been booked!
+      </prompt>
+    </block>
+  </form>  
+  
+</vxml>

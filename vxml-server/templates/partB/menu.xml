@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
+      xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
+
+  <!-- Menu -->
+  <menu>
+      
+      <prompt>
+          Welcome! Do you want to book a flight or get information about delayed flights?
+      </prompt>
+      
+      <choice next="booking.xml#welcome">Book a flight</choice>
+      <choice next="delayed_flights#seeDelayedFlights">Get information</choice>      
+      
+      <nomatch>
+          I didn't understand. You can say Book a flight or Get information.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. Do you want to book a flight or get information about delayed flights?
+          <reprompt/>
+      </noinput>      
+      
+  </menu>
+  
+</vxml>
