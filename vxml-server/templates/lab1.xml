@@ -123,7 +123,7 @@
       <assign name="to" expr="toField" />
       <if cond="toField == fromField">
         You can't go to the same city you are leaving. You are leaving <value expr="fromField">. Which city are you going to?          
-          <reprompt/>
+        </reprompt>
       </if>              
       <goto next="#askDate" />
     </filled>
