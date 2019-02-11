@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
       xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
-  <nomatch>
-    I didn't understand.
-    <reprompt/>
-  </nomatch>
-  
-  <noinput>
-    You didn't say anything.
-    <reprompt/>
-  </noinput>
 
-  <!-- Data model -->
   <var name="from" />
   <var name="to" />
   <var name="date" />
   <var name="return" />
   
-  <!-- Menu -->
   <menu>
       
       <prompt>
@@ -39,7 +28,6 @@
       
   </menu>
 
-  <!-- State machine -->
   <form id="seeDelayedFlights">
     <block>
       <prompt>
