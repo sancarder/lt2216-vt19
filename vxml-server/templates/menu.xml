@@ -9,7 +9,7 @@
       </prompt>
       
       <choice next="booking.xml#welcome">Book a flight</choice>
-      <choice next="delayed_flights#seeDelayedFlights">Get information</choice>      
+      <choice next="delayed_flights.xml#seeDelayedFlights">Get information</choice>      
       
       <nomatch>
           I didn't understand. You can say Book a flight or Get information.
