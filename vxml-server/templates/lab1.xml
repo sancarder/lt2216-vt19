@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
       xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
-
   <var name="from" />
   <var name="to" />
-  <var name="date" />
-  <var name="return" />
+  <var name="leavedate" />
+  <var name="returndate" />
   
   <menu>
       
@@ -147,7 +146,7 @@
       
     </field>
     <filled>
-      <assign name="date" expr="leaveDateField" />        
+      <assign name="leavedate" expr="leaveDateField" />        
       <goto next="#askOneWay"/>
     </filled>
   </form>
@@ -215,7 +214,7 @@
       
     </field>
     <filled>
-      <assign name="return" expr="returnDateField" />        
+      <assign name="returndate" expr="returnDateField" />        
       <goto next="#askReturnTripConfirmation"/>
     </filled>
   </form>
