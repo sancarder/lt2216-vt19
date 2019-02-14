@@ -6,10 +6,10 @@ This version is preliminary and subject to change
 
 In this lab session you will practice writing speech recognition grammars in the style of Speech Recognition Grammar Specification (SRGS) and Semantic Interpretation for Speech Recognition (SISR). It is assumed that you have read the relevant literature on the subject before attempting to solve the assignments.
 
-In order to test your grammars, you should build yourself a small "testing environment". There are two files: =./templates/lab2.xml= (VoiceXML) and =./grammars/lab2.xml= (SRGS).
+In order to test your grammars, you should build yourself a small "testing environment". There are two files: =./vxml-server/templates/lab2.xml= (VoiceXML) and =./vxml-server/grammars/lab2.xml= (SRGS).
 * Recognising funny quotes
 Here is a wellknown but still funny listing of short quotes:
-| o do is to be  | Socrates |
+| to do is to be | Socrates |
 | to be is to do | Sartre   |
 | do be do be do | Sinatra  |
 
@@ -48,8 +48,8 @@ Your task here is to:
    You will need at least two more rules: one rule for "action", and one rule that ties "object" and "action" together.
 2. Add semantic tags to your grammar, in such a way that the interpretation of what is being said becomes an object (a JavaScript object, to be more precise). For example, if you say "turn the AC off" the ASR should return the object:
    #+BEGIN_SRC json
-   {object: 'air conditioning',
-   action: 'off'}
+   {"object": "air conditioning",
+    "action": "off"}
    #+END_SRC
    When testing this, I recommend that you change your definition of <filled> by adding:
    #+BEGIN_SRC xml
@@ -58,7 +58,7 @@ Your task here is to:
    #+END_SRC
 3. Now, you want to be able to be polite to your intelligent home, don't you? Add rule(s) that will allow you to start your utterances with an optional "please", as in "please close the door".
 4. Finally, your grammar most likely suffers from the problem that "open the air conditioning" is recognized. This is not optimal. Try to revise your grammar in a way that will fix this problem.
-* (VG part) Working with the confidence threshold
+* (VG part) Working with confidence threshold
 1. Does the recognition works fine? Try to get some situations when you get false acceptances and see what confidence scores did you get.
 2. Add the property for adjusting the confidence threshold. Now your application will return nomatch for inputs with the confidence below the threshold.
 3. How the selection of an optimal threshold can be automated? (write your proposal in the comment box)
