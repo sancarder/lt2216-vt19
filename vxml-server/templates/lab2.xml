@@ -11,7 +11,7 @@
   <form id="test">
     <field name="foo">
       <prompt>Say something!</prompt>
-      <grammar src="grammars/lab3.grxml"/>
+      <grammar src="grammars/lab2.xml"/>
     </field>
     <filled>
 	<prompt>
