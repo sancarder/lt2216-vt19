@@ -257,7 +257,7 @@
       </nomatch>
       
       <noinput>
-          You didn't say anything. Do you want to go from <value expr="from"/> to <value expr="to"/> on <value expr="leavedate"/> returning on <value expr="returndatedate"/>?  
+          You didn't say anything. Do you want to go from <value expr="from"/> to <value expr="to"/> on <value expr="leavedate"/> returning on <value expr="returndate"/>?  
           <reprompt/>
       </noinput>        
     </field>
