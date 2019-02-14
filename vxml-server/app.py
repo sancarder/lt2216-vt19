@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response
+from flask import Flask, render_template, make_response, send_from_directory
 app = Flask(__name__)
 
 temp = '13'
@@ -16,3 +16,7 @@ def lab1():
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
     return response
+
+@app.route('/grammars/<path:path>')
+def send_grammar(path):
+    return send_from_directory('grammars', path)
