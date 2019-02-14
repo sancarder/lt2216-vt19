@@ -23,3 +23,17 @@ def menu():
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
     return response
+
+@app.route('/delayed')
+def delayed():
+    vxml = render_template('delayed.xml')
+    response = make_response(vxml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
+@app.route('/booking')
+def booking():
+    vxml = render_template('booking.xml')
+    response = make_response(vxml)
+    response.headers["Content-Type"] = "application/xml"
+    return response

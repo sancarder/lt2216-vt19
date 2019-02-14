@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<vxml version="2.1" application="menu.xml" xmlns="http://www.w3.org/2001/vxml"
+<vxml version="2.1" application="menu" xmlns="http://www.w3.org/2001/vxml"
       xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
 
     <link next="menu.xml">

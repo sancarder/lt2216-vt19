@@ -7,9 +7,9 @@
       <prompt>
           Welcome! Do you want to book a flight or get information about delayed flights?
       </prompt>
-      
-      <choice next="booking.xml#welcome">Book a flight</choice>
-      <choice next="delayed_flights.xml#seeDelayedFlights">Get information</choice>      
+
+      <choice next="booking">Book a flight</choice>
+      <choice next="delayed">Get information</choice>      
       
       <nomatch>
           I didn't understand. You can say Book a flight or Get information.
