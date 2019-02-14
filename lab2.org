@@ -1,0 +1,73 @@
+#+TITLE: Lab 2. Speech recognition and semantic interpretation
+
+#+BEGIN_EXAMPLE
+This version is preliminary and subject to change
+#+END_EXAMPLE
+
+In this lab session you will practice writing speech recognition grammars in the style of Speech Recognition Grammar Specification (SRGS) and Semantic Interpretation for Speech Recognition (SISR). It is assumed that you have read the relevant literature on the subject before attempting to solve the assignments.
+
+In order to test your grammars, you should have a small "testing environment" (fetch the repository!). There are two files: =./vxml-server/templates/lab2.xml= (VoiceXML) and =./vxml-server/grammars/lab2.xml= (SRGS).
+* Recognising funny quotes
+Here is a wellknown but still funny listing of short quotes:
+| to do is to be | Socrates |
+| to be is to do | Sartre   |
+| do be do be do | Sinatra  |
+
+Your task here is to:
+
+1. Write an SRGS grammar that covers exactly these quotes, and no other sentences/utterances. Test it by using the code above.
+2. Add semantic tags to your grammar, so as to enable the ASR to return the name corresponding to the source of the recognized quote (e.g. 'socrates'). Again test it by using the code above.
+* Recognizing simple commands
+Suppose that you want to voice control your intelligent home, and be able to say things like:
+#+BEGIN_EXAMPLE
+turn off the light
+turn on the light
+turn off the air conditioning
+turn on the AC
+turn on the heat
+open the window
+close the door
+open the door
+close the window
+#+END_EXAMPLE
+
+Your task here is to:
+1. Write a grammar that covers the above utterances. In principle, you could solve this by writing a grammar that just listed them all. This is not allowed in this exercise however. Instead, I want you to write a grammar that makes use of at least three rules. In order to give you a good start, I have written one rule for you:
+   #+BEGIN_SRC xml
+     <rule id="object">
+       <one-of>
+          <item> light </item>
+          <item> heat </item>
+          <item> A C <tag> out = 'air conditioning'; </tag></item>
+          <item> air conditioning </item>
+          <item> window </item>
+          <item> door </item>
+       </one-of>
+     </rule>
+   #+END_SRC
+   You will need at least two more rules: one rule for "action", and one rule that ties "object" and "action" together.
+2. Add semantic tags to your grammar, in such a way that the interpretation of what is being said becomes an object (a JavaScript object, to be more precise). For example, if you say "turn the AC off" the ASR should return the object:
+   #+BEGIN_SRC json
+   {"object": "air conditioning",
+    "action": "off"}
+   #+END_SRC
+   When testing this, I recommend that you change your definition of <filled> by adding:
+   #+BEGIN_SRC xml
+   Object was: <value expr="foo$.interpretation.object"/>
+   Action was: <value expr="foo$.interpretation.action"/>
+   #+END_SRC
+3. Now, you want to be able to be polite to your intelligent home, don't you? Add rule(s) that will allow you to start your utterances with an optional "please", as in "please close the door".
+4. Finally, your grammar most likely suffers from the problem that "open the air conditioning" is recognized. This is not optimal. Try to revise your grammar in a way that will fix this problem.
+* (VG part) Working with confidence threshold
+1. Does the recognition works fine? Try to get some situations when you get false acceptances and see what confidence scores did you get.
+2. Add the property for adjusting the confidence threshold. Now your application will return nomatch for inputs with the confidence below the threshold.
+3. How the selection of an optimal threshold can be automated? Write your proposal in the GUL's comment box.
+4. Extend your VoiceXML according to the table below in order to:
+   - Acknowledge the action if the confidence score is high ("Opening the window").
+   - Ask for confirmation if the confidence score is not high enough but above the threshold ("You asked to open the window. Correct?").
+| Confidence | Action               |
+|------------+----------------------|
+| High       | Acknowledge          |
+| Mid        | Ask for confirmation |
+| Low        | Reprompt             |
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<grammar version="1.0" tag-format="semantics/1.0" root="yn">
+  <rule id="yn">
+    <one-of>
+      <item>yes<tag>out="yes";</tag></item>
+      <item>yeah<tag>out="yes";</tag></item>
+      <item>no<tag>out="no";</tag></item>
+      <item>nope<tag>out="no";</tag></item>
+    </one-of>
+  </rule>
+</grammar>
