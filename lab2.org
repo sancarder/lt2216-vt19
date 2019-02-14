@@ -61,7 +61,7 @@ Your task here is to:
 * (VG part) Working with confidence threshold
 1. Does the recognition works fine? Try to get some situations when you get false acceptances and see what confidence scores did you get.
 2. Add the property for adjusting the confidence threshold. Now your application will return nomatch for inputs with the confidence below the threshold.
-3. How the selection of an optimal threshold can be automated? (write your proposal in the comment box)
+3. How the selection of an optimal threshold can be automated? Write your proposal in the GUL's comment box.
 4. Extend your VoiceXML according to the table below in order to:
    - Acknowledge the action if the confidence score is high ("Opening the window").
    - Ask for confirmation if the confidence score is not high enough but above the threshold ("You asked to open the window. Correct?").
