@@ -2,31 +2,75 @@
 <vxml version="2.1" application="menu" xmlns="http://www.w3.org/2001/vxml"
       xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
 
-    <link next="menu.xml">
-        <grammar xml:lang="en-US" root="LINKGRAM">
-            <rule id="LINKGRAM">
-                <one-of>
-                    <item>start over</item>                    
-                </one-of>
-            </rule>
-        </grammar>
-    </link>
+  <!-- Global commands  -->
+  <link next="menu.xml">
+    <grammar xml:lang="en-US" root="LINKGRAM">
+      <rule id="LINKGRAM">
+	<one-of>
+	  <item>start over</item>                    
+	</one-of>
+      </rule>
+    </grammar>
+  </link>
+
+  <link event="exit" message="'Oh, you want to exit. Goodbye.'">
+    <grammar xml:lang="en-US" root="LINKGRAM">
+      <rule id="LINKGRAM">
+	<one-of>
+	  <item>goodbye</item>
+	</one-of>
+      </rule>
+    </grammar>
+  </link>
+
+
+  <!-- Event handler  -->
+  <catch event="exit">
+      <value expr="_message"/>
+      <exit/>
+  </catch>
 
   <!-- Data model -->
   <var name="from" />
   <var name="to" />
   <var name="leavedate" />
   <var name="returndate" />
-  
+  <var name="repeatquestion"/>
+
   <!-- State machine -->
   <form id="welcome">
     <block>
-      <prompt>
+      <prompt bargein="false">
         <break time="2000" />
         Welcome to the flight booking service.
       </prompt>
-      <goto next="#askFrom" />
+      <goto next="#askRepeat" />
     </block>
+  </form>
+
+  <form id="askRepeat">
+    <field name="repeatField">
+      <prompt bargein="false">
+	Do you want me to repeat each time you make a choice?
+      </prompt>
+
+      <grammar xml:lang="en-us" root="TOPLEVEL">
+          <rule id="TOPLEVEL">
+              <one-of>
+                  <item>Yes</item>
+                  <item>No</item>
+              </one-of>
+          </rule>
+      </grammar>
+    </field>
+
+    <filled>
+      <assign name="repeatquestion" expr="repeatField"/>
+      <if cond="repeatquestion == 'Yes'">
+	You said <value expr="repeatquestion"/>
+      </if>
+      <goto next="#askFrom"/>
+    </filled>
   </form>
 
   <form id="askFrom">
@@ -58,7 +102,9 @@
 
     <filled>
       <assign name="from" expr="fromField" />
-      You want to go from <value expr="from"/>
+      <if cond="repeatquestion == 'Yes'">
+	You want to go from <value expr="from"/>
+      </if>
       <goto next="#askTo" />
     </filled>
   </form>
@@ -91,9 +137,13 @@
     </field>
 
     <filled>
+
+      <if cond="repeatquestion == 'Yes'">
+	You want to go to <value expr="toField"/>
+      </if>
+
       <if cond="toField!=from">
 	<assign name="to" expr="toField" />
-	You want to go to <value expr="to"/>
 	<goto next="#askLeaveDate" />
       </if>
       You can't go to the same city you left from.
@@ -132,7 +182,11 @@
 
     <filled>
       <assign name="leavedate" expr="leaveDateField" />
-      You want to leave on <value expr="leaveDateField"/>
+
+      <if cond="repeatquestion == 'Yes'">
+	You want to go on <value expr="leavedate"/>
+      </if>
+
       <goto next="#askOneWay"/>
     </filled>
   </form>
@@ -155,9 +209,15 @@
     </field>
     
     <filled>
-      <prompt>
-	You said <value expr="oneWayField"/>
-      </prompt>
+
+      <if cond="repeatquestion == 'Yes'">
+	<if cond="oneWayField">
+	  You said Yes
+	<else />
+	  You said No
+	</if>
+      </if>
+
       <if cond="oneWayField">
           <goto next="#askOneWayConfirmation"/>
       </if>
@@ -196,7 +256,11 @@
 
     <filled>
       <assign name="returndate" expr="returnDateField" />
-      You want to return on <value expr="returndate"/>
+
+      <if cond="repeatquestion == 'Yes'">
+	You want to return on <value expr="returndate"/>
+      </if>
+
       <goto next="#askReturnTripConfirmation"/>
     </filled>
   </form>
@@ -220,6 +284,15 @@
     </field>
 
     <filled>
+
+      <if cond="repeatquestion == 'Yes'">
+	<if cond="OneWayConfirmationField">
+	  You said Yes
+	<else />
+	  You said No
+	</if>
+      </if>
+
       <if cond="OneWayConfirmationField">
           <goto next="#confirmFlight"/>
       </if>
@@ -245,6 +318,15 @@
     </field>
 
     <filled>
+
+      <if cond="repeatquestion == 'Yes'">
+	<if cond="ReturnTripConfirmationField">
+	  You said Yes
+	<else />
+	  You said No
+	</if>
+      </if>
+
       <if cond="ReturnTripConfirmationField">
           <goto next="#confirmFlight"/>
       </if>
@@ -260,5 +342,15 @@
       </prompt>
     </block>
   </form>  
+
+  <form id="quit">
+    <block>
+      <prompt>
+	<break time="1000"/>
+	Goodbye and welcome back!
+      </prompt>
+      <exit/>
+    </block>
+  </form>
   
 </vxml>

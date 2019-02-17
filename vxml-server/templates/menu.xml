@@ -9,7 +9,7 @@
       </prompt>
 
       <choice next="booking">Book a flight</choice>
-      <choice next="delayed">Get information</choice>      
+      <choice next="delayed">Get information</choice>
       
       <nomatch>
           I didn't understand. You can say Book a flight or Get information.
