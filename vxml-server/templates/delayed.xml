@@ -16,7 +16,7 @@
     <block>
       <prompt>
         <break time="2000" />
-        All flights are on time.
+        All flights are currently on time.
       </prompt>
     </block>
   </form>  
