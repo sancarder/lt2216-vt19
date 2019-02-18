@@ -18,6 +18,9 @@
       <rule id="LINKGRAM">
 	<one-of>
 	  <item>goodbye</item>
+	  <item>exit</item>
+	  <item>end call</item>
+	  <item>hang up</item>
 	</one-of>
       </rule>
     </grammar>
