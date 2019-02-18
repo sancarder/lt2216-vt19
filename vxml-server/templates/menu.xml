@@ -5,7 +5,7 @@
   <menu>
       
       <prompt>
-          Welcome! Do you want to book a flight or get information about delayed flights?
+          Welcome to the flight central! Do you want to book a flight or get information about delayed flights?
       </prompt>
 
       <choice next="booking">Book a flight</choice>
