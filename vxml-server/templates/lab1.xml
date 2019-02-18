@@ -76,7 +76,6 @@
 
     <filled>
       <assign name="from" expr="fromField" />
-      You want to go from <value expr="from"/>
       <goto next="#askTo" />
     </filled>
   </form>
@@ -111,7 +110,6 @@
     <filled>
       <if cond="toField!=from">
 	<assign name="to" expr="toField" />
-	You want to go to <value expr="to"/>
 	<goto next="#askLeaveDate" />
       </if>
       You can't go to the same city you left from.
@@ -150,7 +148,6 @@
 
     <filled>
       <assign name="leavedate" expr="leaveDateField" />
-      You want to leave on <value expr="leaveDateField"/>
       <goto next="#askOneWay"/>
     </filled>
   </form>
@@ -173,9 +170,6 @@
     </field>
     
     <filled>
-      <prompt>
-	You said <value expr="oneWayField"/>
-      </prompt>
       <if cond="oneWayField">
           <goto next="#askOneWayConfirmation"/>
       </if>
@@ -214,7 +208,6 @@
 
     <filled>
       <assign name="returndate" expr="returnDateField" />
-      You want to return on <value expr="returndate"/>
       <goto next="#askReturnTripConfirmation"/>
     </filled>
   </form>
