@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<vxml version="2.0">
+  <form id="test">
+    <block name="foo">
+      <prompt>
+        The biggest loser among the top 10 cryptocurrencies is bitcoin cash (BCH), down 10.58 percent in the last 24 hours. It's also down 24.11 percent from the recent high of $1,641.40. 
+        <break time="2s"/>
+         The biggest loser among the top 10 cryptocurrencies is bitcoin cash (BCH), down 10.58 percent in the last 24 hours. It's also down 24.11 percent from the recent high of $1,641.40. 
+      </prompt> 
+    </block>
+  </form>
+</vxml>
