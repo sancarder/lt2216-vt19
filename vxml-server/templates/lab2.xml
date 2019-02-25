@@ -8,19 +8,35 @@
     You didn't say anything.
   </noinput>
 
-  <form id="test">
-    <field name="foo">
+  <form id="funnyQuotes">
+    <field name="quotes">
       <prompt>Say something!</prompt>
-      <grammar src="grammars/lab2.xml"/>
+      <grammar src="grammars/lab2_quotes.xml"/>
     </field>
     <filled>
 	<prompt>
-	  You said: <value expr="foo$.utterance"/>,
-	  with the interpretation <value expr="foo$.interpretation"/>
-	  and with a confidence of <value expr="foo$.confidence"/>
+	  You said: <value expr="quotes$.utterance"/>,
+	  with the interpretation <value expr="quotes$.interpretation"/>
+	  and with a confidence of <value expr="quotes$.confidence"/>
 	  <break time="2s"/>
 	</prompt>
-	<goto next="#test"/>
+	<goto next="#simpleCommands"/>
     </filled>
   </form>
+
+  <form id="simpleCommands">
+    <field name="commands">
+      <prompt>What do you want your smart home to do?</prompt>
+      <grammar src="grammars/lab2_commands.xml"/>
+    </field>
+    <filled>
+	<prompt>
+	  Object was <value expr="commands$.interpretation.object"/>
+	  and action was <value expr="commands$.interpretation.action"/>
+	  <break time="2s"/>
+	</prompt>
+	<goto next="#simpleCommands"/>
+    </filled>
+  </form>
+
 </vxml>
