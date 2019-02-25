@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<grammar version="1.0" tag-format="semantics/1.0" root="TOPLEVEL">
+
+  <rule id="TOPLEVEL">
+
+    <tag>out.article="";</tag>
+    <tag>out.polite="";</tag>
+
+    <item>
+
+      <item repeat="0-1">
+	<ruleref uri="#POLITE"/>
+	<tag>out.polite=rules.POLITE.polite;</tag>
+      </item>
+
+      <ruleref uri="#UTTERANCE"/>
+      <tag>out.action = rules.UTTERANCE.action;</tag>
+      <tag>out.object = rules.UTTERANCE.object;</tag>
+
+      <tag>out.command = out.polite + out.action + out.object;</tag>
+
+    </item>
+
+  </rule>
+
+
+  <rule id="POLITE">
+    <one-of>
+      <item>please<tag>out.polite="the";</tag></item>
+    </one-of>
+  </rule>
+
+  <rule id="UTTERANCE">
+    <one-of>
+      <item>turn off the light<tag>out.action="turn off";out.object="light";</tag></item>
+      <item>turn off the air conditioning<tag>out.action="turn off";out.object="air conditioning";</tag></item>
+
+      <item>turn on the light<tag>out.action="turn on";out.object="light";</tag></item>
+      <item>turn on the A C<tag>out.action="turn on";out.object="air conditioning";</tag></item>
+      <item>turn on the heat<tag>out.action="turn on";out.object="heat";</tag></item>
+
+      <item>open the window<tag>out.action="open";out.object="window";</tag></item>
+      <item>open the door<tag>out.action="open";out.object="door";</tag></item>
+
+      <item>close the window<tag>out.action="close";out.object="window";</tag></item>
+      <item>close the door<tag>out.action="close";out.object="door";</tag></item>
+
+
+    </one-of>
+  </rule>
+
+</grammar>
