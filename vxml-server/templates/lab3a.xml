@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<vxml version="2.0">
+
+<!-- Playing around with tags. Using Voxeo TTS.  -->
+ <form id="play">
+   <block name="foo">
+     <prompt xml:lang="en-us">                                                                                                                                                     
+       The biggest <prosody rate="slow">loser</prosody> among the top 10 <phoneme alphabet="ipa" ph="'krɪptəʊkʌrənsiz'">cryptocurrencies</phoneme><break time="200ms"/>  
+       is <emphasis>bitcoin cash, (BCH)</emphasis>, down <say-as interpret-as="cardinal" detail=".">10.58</say-as> percent in the last 24 hours. <break time="1000ms"/> 
+       It's also down <say-as interpret-as="cardinal" detail=".">24.11</say-as> percent from the recent high of $1,641.40. 
+     </prompt>
+   </block>
+ </form>
+
+</vxml>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<vxml version="2.0">
+
+ <!-- Making a calender booking. Using Voxeo TTS. -->
+ <form id="calendar">
+   <block name="book">
+     <prompt xml:lang="en-us">
+       <paragraph xml:lang="en-us">
+         <sentence>I have your calendar open. </sentence>
+         <sentence><prosody rate="-10st" pitch="+1st">For what date? </prosody></sentence>
+         <break strength="medium"/>
+         <sentence><prosody rate="-3st" contour="(90%, +20Hz)">What time would you like to start? </prosody></sentence>
+         <break strength="medium"/>
+         <sentence><prosody rate="-5st" contour="(85%, +20Hz)">How much time do you want to block out?</prosody></sentence>
+         <break strength="medium"/>
+         <sentence><prosody rate="-5st" pitch="+1st">What shall we call this?</prosody></sentence>
+         <sentence><sub alias="Okay">Ok.</sub></sentence>
+         <sentence>On <say-as interpret-as="date" format="dm">5-3</say-as>, at <say-as interpret-as="time" format="hms12">4pm</say-as>, you now have added 
+	 <emphasis>coffee with Anna</emphasis></sentence>
+         <break strength="x-weak"/>
+       </paragraph>
+     </prompt>
+   </block>
+ </form>
+
+</vxml>

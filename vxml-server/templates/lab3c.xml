@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<vxml version="2.0">
+
+ <!-- Performing a poem. Using Voxeo TTS.  -->
+ <form id="poem">
+   <block name="poetry">
+     <prompt xml:lang="en-us">
+       <paragraph xml:lang="en-us">
+	 <sentence>
+	   <prosody rate="high">People always say that the <emphasis level="strong">girls</emphasis> of this generation are so vain,
+	   Why can’t they put their brains towards <emphasis level="strong">books</emphasis> instead of good looks</prosody>
+	   <prosody rate="high" pitch="high">I used to</prosody> blame girls too... 
+	   <prosody rate="high">being more than a perfect body with a pretty hair do</prosody>, and
+	   <prosody rate="high" pitch="high">then</prosody> I stepped out into the world
+	   <prosody rate="high">I opened my eyes to the <emphasis level="strong">truth</emphasis> about being a girl, 
+	   I heard guys say things like </prosody>
+	   <prosody rate="high" pitch="x-high">Dude</prosody> 
+	   <prosody rate="high" pitch="low">she was 10 times tighter than that girl you hit and quit Ray</prosody>, or 
+	   <prosody rate="high" pitch="low">I wanna pipe your sister some day</prosody>, or her
+	   <prosody rate="high" pitch="x-high">ass</prosody> 
+	   <prosody rate="high">looks like a</prosody> 
+	   <prosody rate="high" pitch="x-high">race truck</prosody> 
+	   <prosody rate="high">with those stretch marks, but, at least it’s big like Kim K's</prosody>
+	 </sentence>
+       </paragraph>
+     </prompt> 
+   </block>
+ </form>
+
+
+</vxml>
