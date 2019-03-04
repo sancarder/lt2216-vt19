@@ -45,23 +45,23 @@ def booking():
     response.headers["Content-Type"] = "application/xml"
     return response
 
-@app.route('/lab3a')
-def lab3a():
-    vxml = render_template('lab3a.xml')
+@app.route('/ssmlwarmup')
+def ssmlwarmup():
+    vxml = render_template('ssmlwarmup.xml')
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
     return response
 
-@app.route('/lab3b')
-def lab3b():
-    vxml = render_template('lab3b.xml')
+@app.route('/soundofdialogue')
+def soundofdialogue():
+    vxml = render_template('soundofdialogue.xml')
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
     return response
 
-@app.route('/lab3c')
-def lab3c():
-    vxml = render_template('lab3c.xml')
+@app.route('/poetryslam')
+def poetryslam():
+    vxml = render_template('poetryslam.xml')
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
     return response
