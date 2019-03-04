@@ -45,9 +45,23 @@ def booking():
     response.headers["Content-Type"] = "application/xml"
     return response
 
-@app.route('/lab3')
-def lab3():
-    vxml = render_template('lab3.xml')
+@app.route('/lab3a')
+def lab3a():
+    vxml = render_template('lab3a.xml')
+    response = make_response(vxml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
+@app.route('/lab3b')
+def lab3b():
+    vxml = render_template('lab3b.xml')
+    response = make_response(vxml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
+@app.route('/lab3c')
+def lab3c():
+    vxml = render_template('lab3c.xml')
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
     return response
