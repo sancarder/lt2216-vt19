@@ -1,0 +1,67 @@
+#+TITLE: Lab 4. Building a frame-base dialog system in VoiceXML
+
+#+BEGIN_EXAMPLE
+This version is preliminary and subject to change
+#+END_EXAMPLE
+
+n this final lab, we will move to a frame-based dialogue system for the flight booking service built in the previous labs.
+
+What a frame-based dialogue system allows a user to do is to provide information not only in a fixed number of pieces, but also in "one shot". For example, if someone has to order a merchandise, they might spell their address and their post number alltogether, without waiting the system to ask for each information.
+
+In the case of a booking flight system, a user could fill the required "information slots" in many ways. For example, she could say in one utterance where she wants to go and when she wants to leave, or where she wants to go and from where she wants to leave, and so on. You need to handle these cases and make sure that the information is stored accordingly.  
+
+* Some remarks on implementation
+As in Lab 2 and Lab 3, you will basically need two files: a main file for booking, and a grammar file. Your main file will call your grammar file.
+
+In your grammar file, you will be able to define the different ways a user can fill slots of information, providing a =uri= for each slot.
+
+This way, you will be able to deal with users declaring their intentions in one sentence (e.g. I want to go from Paris to London on the third of March), without forcing them through the whole step-by-step question-answering protocol.
+
+For example, to allow a user to say something like I want to go from Paris to London, you could write:
+#+BEGIN_SRC xml
+<rule id="init" scope="public">
+  <item>
+   I want to go from
+   <ruleref uri="#fromCity"/>
+   to
+   <ruleref uri="#destination"/>
+   <tag>out.fromCity = rules.fromCity; out.destination = rules.destination; </tag>
+  </item>
+</rule> 
+#+END_SRC
+
+*Hint*: don't forget that if you use the previous structure, you will actually be defining several alternative possible utterances. Thus the element =<one-of>= could come at hand. 
+
+Your rules element can be defined somewhere, usually at the end of your file, in the form of a list of possibilities, such as:
+
+#+BEGIN_SRC xml
+<rule id="choosePlace" scope="public">
+   <one-of>
+     <item> Earth </item>
+     <item> Venus </item>
+     <item> Mars </item>
+   </one-of>
+</rule>
+#+END_SRC
+
+To link the form to your grammar, you can use the <grammar> element, such as: =<grammar src="mygrammar.grxml"/>=
+
+At every question, furthermore, you can link the specific field in your grammar file, like in the following example:
+
+#+BEGIN_SRC xml
+  <field name="chooseBook">
+    <prompt> What book would you like to read?</prompt>
+     <grammar src="mygrammar.grxml#chooseBook"/>
+  </field>
+#+END_SRC
+
+This way, a frame-based module can be implemented. Similar scripts are useful because they can prevent a system from following a single path of questions: the user has more control on the conversation. If some information has already been provided by the user, the system won't ask for it again later.
+
+* Tasks
+1. Re-write your flight booking service so that it can behave in the way outlined above.
+2. Call it and test it. You should be able to say different possible combinations of information: "I want to go from New York to Tokyo", "I want to leave from London the 1st of March", and so on. If your grammar is correct, your system shouldn’t ask for information that was already given for the second time.
+3. As in Lab 1, add a small menu at the beginning of your dialogue file so that the user can choose whether to have informations on the flights schedule or to actually book a flight.
+4. Add a choice of your invention for your users: for example what kind of menu they want during the flight or if they want to travel on a specific kind of plane. Make sure that this new possibility is handled like the previous steps of your dialogue: for example your user should be able to utter I want to go to London riding a B52 without creating perplexities. 
+
+* VG part
+Please recall the shortcomings that you have reported in Lab1. You will need to fix/improve them in your application as well. Please provide a list of things that you managed to fix/improve. 
