@@ -10,6 +10,13 @@ def hello():
     response.headers["Content-Type"] = "application/xml"
     return response
 
+@app.route('/tenta')
+def tenta():
+    vxml = render_template('tenta.xml', temp=temp)
+    response = make_response(vxml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
 @app.route('/lab1')
 def lab1():
     vxml = render_template('lab1.xml')
@@ -62,6 +69,13 @@ def soundofdialogue():
 @app.route('/poetryslam')
 def poetryslam():
     vxml = render_template('poetryslam.xml')
+    response = make_response(vxml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
+@app.route('/lab4')
+def lab4():
+    vxml = render_template('lab4.xml')
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
     return response
