@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
+      xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
+  
+  <var name="from" />
+  <var name="to" />
+  <var name="leavedate" />
+  <var name="returndate" />
+
+  <menu>
+      
+      <prompt>
+          Welcome! Do you want to book a flight or get information about delayed flights?
+      </prompt>
+      
+      <choice next="#welcome">Book a flight</choice>
+      <choice next="#seeDelayedFlights">Get information</choice>      
+      
+      <nomatch>
+          I didn't understand. You can say Book a flight or Get information.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. Do you want to book a flight or get information about delayed flights?
+          <reprompt/>
+      </noinput>      
+      
+  </menu>
+
+  <form id="seeDelayedFlights">
+    <block>
+      <prompt>
+        <break time="2000" />
+        All flights are on time.
+      </prompt>
+    </block>
+  </form>  
+  
+  <form id="welcome">
+    <block>
+      <prompt>
+        <break time="2000" />
+        Welcome to the flight booking service.
+      </prompt>
+      <goto next="#travel" />
+    </block>
+  </form>
+
+
+  <form id="travel">
+
+    <grammar src="grammars/lab4.xml" root="TRAVEL"/>
+
+    <initial name="trip">
+      <prompt>Tell me the details of your trip.</prompt>
+
+      <nomatch count="1">
+	<prompt>I'm not sure I caught that. I'll ask you for the information in steps.</prompt>
+	<assign name="trip" expr="true"/>
+	<reprompt/>
+      </nomatch>
+
+    </initial>
+
+    <field name="departure">
+    <grammar src="grammars/lab4.xml#FROMCITY"/>
+      <prompt>What city are you leaving from?</prompt>
+    </field>
+
+    <field name="destination">
+    <grammar src="grammars/lab4.xml#TOCITY"/>
+      <prompt>Where are you going?</prompt>
+    </field>
+
+    <field name="leavedate">
+    <grammar src="grammars/lab4.xml#LEAVEDATE"/>
+      <prompt>On what day are you leaving?</prompt>
+    </field>
+
+    <field name="returndate">
+    <grammar src="grammars/lab4.xml#RETURNDATE"/>
+      <prompt>On what day are you returning?</prompt>
+    </field>
+
+    <filled mode="all">
+      <prompt>
+	You have chosen to go from <value expr="departure"/> to <value expr="destination"/>
+      </prompt>
+      <if cond="destination == departure">
+	You can't go to the same city you left. Let's start over.
+	<goto next="#travel"/>
+	<else/>
+	  <prompt>You are leaving on <value expr="leavedate"/> and returning on <value expr="returndate"/></prompt>
+      </if>
+      <goto next="#confirmFlight"/>
+    </filled>
+
+  </form>
+  
+  
+  <form id="confirmFlight">
+    <block>
+      <prompt>
+        <break time="2000" />
+        Your flight has been booked!
+      </prompt>
+    </block>
+  </form>  
+  
+</vxml>
