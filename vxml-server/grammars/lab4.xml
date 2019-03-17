@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<grammar version="1.0" tag-format="semantics/1.0" root="TRAVEL">
+
+  <rule id="TRAVEL" scope="public">
+
+    <one-of>
+
+      <item>
+	<ruleref uri="#FROMCITY"/>
+	<ruleref uri="#TOCITY"/>
+	<ruleref uri="#LEAVEDATE"/>
+	<ruleref uri="#RETURNDATE"/>
+	<tag>
+	  out.departure=rules.FROMCITY.departure; 
+	  out.destination=rules.TOCITY.destination; 
+	  out.leavedate=rules.LEAVEDATE.leavedate; 
+	  out.returndate=rules.RETURNDATE.returndate;
+	</tag>
+	
+      </item>
+
+      <item>
+	<ruleref uri="#FROMCITY"/>
+      </item>
+      
+      <item>
+	<ruleref uri="#TOCITY"/>
+      </item>
+
+      <item>
+	<ruleref uri="#LEAVEDATE"/>
+      </item>
+
+      <item>
+	<ruleref uri="#RETURNDATE"/>
+      </item>
+            
+    </one-of>
+	
+  </rule>
+
+
+  <rule id="FROMCITY" scope="public">
+    <item repeat="0-1">
+      <ruleref uri="#FILL_DEPARTURE"/>
+    </item>
+    <item>
+      <ruleref uri="#CITIES"/>
+      <tag>out.departure=rules.CITIES.city</tag>
+    </item>
+  </rule>
+
+  <rule id="TOCITY" scope="public">
+    <item repeat="0-1">
+      <ruleref uri="#FILL_DESTINATION"/>
+    </item>
+    <item>
+      <ruleref uri="#CITIES"/>
+      <tag>out.destination=rules.CITIES.city</tag>
+    </item>
+  </rule>
+
+  <rule id="CITIES" scope="public">
+    <one-of>
+      <item>Paris<tag>out.city="Paris";</tag></item>
+      <item>London<tag>out.city="London";</tag></item>
+      <item>New York<tag>out.city="New York";</tag></item>
+    </one-of>
+  </rule>
+
+  <rule id="LEAVEDATE" scope="public">
+    <item repeat="0-1">on</item>
+    <item>
+      <ruleref uri="#WEEKDAYS"/>
+      <tag>out.leavedate=rules.WEEKDAYS.day</tag>
+    </item>
+  </rule>
+
+  <rule id="RETURNDATE" scope="public">
+    <item repeat="0-1">on</item>
+    <item>
+      <ruleref uri="#WEEKDAYS"/>
+      <tag>out.returndate=rules.WEEKDAYS.day</tag>
+    </item>
+  </rule>
+
+  <rule id="WEEKDAYS" scope="public">
+    <one-of>
+      <item>Monday<tag>out.day="Monday";</tag></item>
+      <item>Tuesday<tag>out.day="Tuesday";</tag></item>
+      <item>Wednesday<tag>out.day="Wednesday";</tag></item>
+      <item>Thursday<tag>out.day="Thursday";</tag></item>
+      <item>Friday<tag>out.day="Friday";</tag></item>
+    </one-of>
+  </rule>
+
+  <rule id="FILL_DEPARTURE" scope="public">
+    <one-of>
+      <item>I want to go from</item>
+      <item>I want to travel from</item>
+      <item>from</item>
+      <item>I want to leave from</item>
+    </one-of>
+  </rule>
+
+  <rule id="FILL_DESTINATION" scope="public">
+    <one-of>
+      <item>I want to go to</item>
+      <item>I want to arrive in</item>
+      <item>to</item>
+      <item>I'm heading to</item>
+    </one-of>
+  </rule>
+
+</grammar>
