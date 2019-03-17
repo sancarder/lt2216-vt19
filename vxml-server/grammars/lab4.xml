@@ -42,7 +42,12 @@
 
   <rule id="FROMCITY" scope="public">
     <item repeat="0-1">
-      <ruleref uri="#FILL_DEPARTURE"/>
+      <one-of>
+	<item>I want to go from</item>
+	<item>I want to travel from</item>
+	<item>from</item>
+	<item>I want to leave from</item>
+      </one-of>
     </item>
     <item>
       <ruleref uri="#CITIES"/>
@@ -52,20 +57,17 @@
 
   <rule id="TOCITY" scope="public">
     <item repeat="0-1">
-      <ruleref uri="#FILL_DESTINATION"/>
+      <one-of>
+	<item>I want to go to</item>
+	<item>I want to arrive in</item>
+	<item>to</item>
+	<item>I'm heading to</item>
+      </one-of>
     </item>
     <item>
       <ruleref uri="#CITIES"/>
       <tag>out.destination=rules.CITIES.city</tag>
     </item>
-  </rule>
-
-  <rule id="CITIES" scope="public">
-    <one-of>
-      <item>Paris<tag>out.city="Paris";</tag></item>
-      <item>London<tag>out.city="London";</tag></item>
-      <item>New York<tag>out.city="New York";</tag></item>
-    </one-of>
   </rule>
 
   <rule id="LEAVEDATE" scope="public">
@@ -84,6 +86,14 @@
     </item>
   </rule>
 
+  <rule id="CITIES" scope="public">
+    <one-of>
+      <item>Paris<tag>out.city="Paris";</tag></item>
+      <item>London<tag>out.city="London";</tag></item>
+      <item>New York<tag>out.city="New York";</tag></item>
+    </one-of>
+  </rule>
+
   <rule id="WEEKDAYS" scope="public">
     <one-of>
       <item>Monday<tag>out.day="Monday";</tag></item>
@@ -91,24 +101,6 @@
       <item>Wednesday<tag>out.day="Wednesday";</tag></item>
       <item>Thursday<tag>out.day="Thursday";</tag></item>
       <item>Friday<tag>out.day="Friday";</tag></item>
-    </one-of>
-  </rule>
-
-  <rule id="FILL_DEPARTURE" scope="public">
-    <one-of>
-      <item>I want to go from</item>
-      <item>I want to travel from</item>
-      <item>from</item>
-      <item>I want to leave from</item>
-    </one-of>
-  </rule>
-
-  <rule id="FILL_DESTINATION" scope="public">
-    <one-of>
-      <item>I want to go to</item>
-      <item>I want to arrive in</item>
-      <item>to</item>
-      <item>I'm heading to</item>
     </one-of>
   </rule>
 
