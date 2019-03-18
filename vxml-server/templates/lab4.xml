@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
       xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
-  
-  <var name="from" />
-  <var name="to" />
-  <var name="leavedate" />
-  <var name="returndate" />
 
+  <!-- Global commands  -->
+  <link next="#welcome">
+    <grammar xml:lang="en-US" root="LINKGRAM">
+      <rule id="LINKGRAM">
+        <one-of>
+          <item>start over</item>
+        </one-of>
+      </rule>
+    </grammar>
+  </link>
+
+  <!-- No match events  -->  
+  <nomatch>
+    I'm sorry, I didn't catch that. Could you say it again, please?
+  </nomatch>
+
+  <noinput>
+    I couldn't seem to hear you. Could you try again, please?
+  </noinput>
+
+
+  <!-- Menu  -->
   <menu>
       
       <prompt>
@@ -28,6 +45,8 @@
       
   </menu>
 
+
+  <!-- See delayed flights  -->
   <form id="seeDelayedFlights">
     <block>
       <prompt>
@@ -36,7 +55,9 @@
       </prompt>
     </block>
   </form>  
-  
+
+
+  <!-- Welcome message  -->
   <form id="welcome">
     <block>
       <prompt>
@@ -48,14 +69,24 @@
   </form>
 
 
+  <!-- Travel booking  -->
   <form id="travel">
 
     <grammar src="grammars/lab4.xml" root="TRAVEL"/>
 
+    <!-- Initial  -->
     <initial name="trip">
-      <prompt>Tell me the details of your trip.</prompt>
+      <prompt bargein="False">Tell me the details of your trip.</prompt>
 
-      <nomatch count="1">
+      <nomatch>
+	<prompt>Tell me departure, destination and the days you want to travel. You can also tell me what bags you are bringing.</prompt>
+      </nomatch>
+
+      <nomatch count="2">
+	<prompt>You can say for example I want to go to London from Paris on Monday with checked in baggage.</prompt>
+      </nomatch>
+
+      <nomatch count="3">
 	<prompt>I'm not sure I caught that. I'll ask you for the information in steps.</prompt>
 	<assign name="trip" expr="true"/>
 	<reprompt/>
@@ -63,49 +94,88 @@
 
     </initial>
 
+    <!-- Single fields  -->
     <field name="departure">
     <grammar src="grammars/lab4.xml#FROMCITY"/>
-      <prompt>What city are you leaving from?</prompt>
+      <prompt bargein="False">What city are you leaving from?</prompt>
+      <prompt count="2">You can leave from London, Paris or New York. Where are you leaving from?</prompt>
     </field>
 
     <field name="destination">
     <grammar src="grammars/lab4.xml#TOCITY"/>
       <prompt>Where are you going?</prompt>
+      <prompt count="2">You can travel to Paris, New York or London. Where do you want to go?</prompt>
     </field>
 
     <field name="leavedate">
     <grammar src="grammars/lab4.xml#LEAVEDATE"/>
-      <prompt>On what day are you leaving?</prompt>
+      <prompt bargein="False">On what day are you leaving?</prompt>
+      <prompt count="2">You can travel between Monday and Friday. What day are you leaving?</prompt>
     </field>
 
     <field name="returndate">
     <grammar src="grammars/lab4.xml#RETURNDATE"/>
-      <prompt>On what day are you returning?</prompt>
+      <prompt bargein="False">On what day are you returning?</prompt>
+      <prompt count="2">You can travel between Monday and Friday. What day are you returning?</prompt>
     </field>
 
+    <field name="baggage">
+    <grammar src="grammars/lab4.xml#BAGGAGE"/>
+      <prompt bargein="False">What kind of baggage are you bringing?</prompt>
+      <prompt count="2">Your bag options are cabin bag, laptop bag, checked-in baggage, fragile items and special equipment. What will you bring?</prompt>
+    </field>
+
+
+    <!-- Stating booking and checking conditions  -->
     <filled mode="all">
       <prompt>
 	You have chosen to go from <value expr="departure"/> to <value expr="destination"/>
+        <break time="1000" />
       </prompt>
+
       <if cond="destination == departure">
 	You can't go to the same city you left. Let's start over.
 	<goto next="#travel"/>
 	<else/>
-	  <prompt>You are leaving on <value expr="leavedate"/> and returning on <value expr="returndate"/></prompt>
+	  <prompt>
+	    You are leaving on <value expr="leavedate"/> and returning on <value expr="returndate"/>.
+            <break time="1000" />
+	    You will bring <value expr="baggage"/>.
+	  </prompt>
       </if>
-      <goto next="#confirmFlight"/>
+
+      <if cond="baggage == 'Fragile items' || baggage == 'Special equipment'">
+	You are bringing items that can't be booked in the system. Please contact the flight booking service to arrange with your trip.
+	<exit/>
+	<else/>
+	<goto next="#confirmFlight"/>
+
+      </if>
     </filled>
 
   </form>
+
   
-  
+  <!-- Confirmation  -->  
   <form id="confirmFlight">
-    <block>
-      <prompt>
-        <break time="2000" />
-        Your flight has been booked!
+    <field name="confirmation" type="boolean">
+      <prompt bargein="False">                                                                                                                                                      
+        <break time="1000" />
+	Can I book this flight for you?
       </prompt>
-    </block>
+    </field>
+
+    <filled>
+      <if cond="confirmation">
+	<prompt>
+          <break time="2000" />
+          Your flight has been booked. Welcome back!
+	</prompt>
+ 	<exit/>
+      </if>
+      Okay, let's start over.
+      <goto next="#travel"/>
+    </filled>
   </form>  
   
 </vxml>
