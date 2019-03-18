@@ -10,11 +10,13 @@
 	<ruleref uri="#TOCITY"/>
 	<ruleref uri="#LEAVEDATE"/>
 	<ruleref uri="#RETURNDATE"/>
+	<ruleref uri="#BAGGAGE"/>
 	<tag>
 	  out.departure=rules.FROMCITY.departure; 
 	  out.destination=rules.TOCITY.destination; 
 	  out.leavedate=rules.LEAVEDATE.leavedate; 
 	  out.returndate=rules.RETURNDATE.returndate;
+	  out.baggage=rules.BAGGAGE.baggage;
 	</tag>
 	
       </item>
@@ -33,6 +35,10 @@
 
       <item>
 	<ruleref uri="#RETURNDATE"/>
+      </item>
+
+      <item>
+	<ruleref uri="#BAGGAGE"/>
       </item>
             
     </one-of>
@@ -86,6 +92,21 @@
     </item>
   </rule>
 
+  <rule id="BAGGAGE" scope="public">
+    <item repeat="0-1">
+      <one-of>
+	<item>I'm bringing</item>
+	<item>with</item>
+	<item>I'm traveling with</item>
+	<item>I'm paying for</item>
+      </one-of>
+    </item>
+    <item>
+      <ruleref uri="#BAGS"/>
+      <tag>out.baggage=rules.BAGS.bag</tag>
+    </item>
+  </rule>
+
   <rule id="CITIES" scope="public">
     <one-of>
       <item>Paris<tag>out.city="Paris";</tag></item>
@@ -101,6 +122,18 @@
       <item>Wednesday<tag>out.day="Wednesday";</tag></item>
       <item>Thursday<tag>out.day="Thursday";</tag></item>
       <item>Friday<tag>out.day="Friday";</tag></item>
+    </one-of>
+  </rule>
+
+  <rule id="BAGS" scope="public">
+    <item repeat="0-1">a</item>
+
+    <one-of>
+      <item>Cabin bag<tag>out.bag="Cabin bag";</tag></item>
+      <item>Laptop bag<tag>out.bag="Laptop bag";</tag></item>
+      <item>Checked-in baggage<tag>out.bag="Checked-in baggage";</tag></item>
+      <item>Fragile items<tag>out.bag="Fragile items";</tag></item>
+      <item>Special equipment<tag>out.bag="Special equipment";</tag></item>
     </one-of>
   </rule>
 
