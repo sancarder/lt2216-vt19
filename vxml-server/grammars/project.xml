@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<grammar version="1.0" tag-format="semantics/1.0" root="GAME">
+
+  <rule id="GAME" scope="public">
+
+    <one-of>
+
+      <item>
+	<ruleref uri="#COURSE"/>
+	<ruleref uri="#CHARACTER"/>
+	<tag>
+	  out.courseChoice=rules.COURSE.courseChoice;
+	  out.characterChoice=rules.CHARACTER.characterChoice;
+	</tag>	
+      </item>
+
+      <item>
+	<ruleref uri="#WIZARD"/>
+      </item>
+      
+      <item>
+	<ruleref uri="#WALL"/>
+      </item>
+
+      <item>
+	<ruleref uri="#ELEPHANT"/>
+      </item>
+            
+    </one-of>
+	
+  </rule>
+
+
+  <rule id="CHARACTER" scope="public">
+    <item repeat="0-1">
+      <one-of>
+	<item>i want to play as</item>
+	<item>play as</item>
+	<item>the</item>
+      </one-of>
+    </item>
+
+    <item>
+      <ruleref uri="#CHARACTERS"/>
+      <tag>out.characterChoice=rules.CHARACTERS.character</tag>
+    </item>
+  </rule>
+
+  <rule id="COURSE" scope="public">
+    <item repeat="0-1">
+      <one-of>
+	<item>i want to play</item>
+	<item>play</item>
+	<item>the</item>
+      </one-of>
+    </item>
+
+    <item>
+      <ruleref uri="#COURSES"/>
+      <tag>out.courseChoice=rules.COURSES.course</tag>
+    </item>
+  </rule>
+
+
+  <rule id="WIZARD" scope="public">
+    <item>
+      <ruleref uri="#NICEOPTIONS"/>
+      <tag>out.wizardAction=rules.NICEOPTIONS.action</tag>
+    </item>
+  </rule>
+
+  <rule id="WALL" scope="public">
+    <item>
+      <ruleref uri="#NICEOPTIONS"/>
+      <tag>out.wallAction=rules.NICEOPTIONS.action</tag>
+    </item>
+  </rule>
+
+  <rule id="ELEPHANT" scope="public">
+    <item>
+      <ruleref uri="#NICEOPTIONS"/>
+      <tag>out.elephantAction=rules.NICEOPTIONS.action</tag>
+    </item>
+  </rule>
+
+  <rule id="SUMOWRESTLER" scope="public">
+    <item>
+      <ruleref uri="#NASTYOPTIONS"/>
+      <tag>out.sumoWrestlerAction=rules.NASTYOPTIONS.action</tag>
+    </item>
+  </rule>
+
+  <rule id="BOMB" scope="public">
+    <item>
+      <ruleref uri="#NASTYOPTIONS"/>
+      <tag>out.bombAction=rules.NASTYOPTIONS.action</tag>
+    </item>
+  </rule>
+
+  <rule id="DRAGON" scope="public">
+    <item>
+      <ruleref uri="#NASTYOPTIONS"/>
+      <tag>out.dragonAction=rules.NASTYOPTIONS.action</tag>
+    </item>
+  </rule>
+
+  <rule id="COURSES" scope="public">
+    <one-of>
+      <item>Nice course<tag>out.course="nice course";</tag></item>
+      <item>Nasty course<tag>out.course="nasty course";</tag></item>
+    </one-of>
+  </rule>
+
+  <rule id="CHARACTERS" scope="public">
+    <one-of>
+      <item>Hermione<tag>out.character="hermione";</tag></item>
+      <item>Humpty Dumpty<tag>out.character="humpty dumpty";</tag></item>
+      <item>Hannibal<tag>out.character="hannibal";</tag></item>
+    </one-of>
+  </rule>
+
+  <rule id="NICEOPTIONS" scope="public">
+    <one-of>
+      <item>Climb<tag>out.action="climb";</tag></item>
+      <item>Bow and shake<tag>out.action="bow";</tag></item>
+      <item>Use a chainsaw<tag>out.action="chainsaw";</tag></item>
+    </one-of>
+  </rule>
+
+  <rule id="NASTYOPTIONS" scope="public">
+    <one-of>
+      <item>Offer food<tag>out.action="food";</tag></item>
+      <item>Run and hide<tag>out.action="run";</tag></item>
+      <item>Cast a spell<tag>out.action="spell";</tag></item>
+    </one-of>
+  </rule>
+
+
+</grammar>
