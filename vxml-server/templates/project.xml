@@ -1,0 +1,379 @@
+ <?xml version="1.0" encoding="utf-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
+      xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
+
+  <!-- Variables -->
+  <var name="triesLeft"/>
+  <var name="character"/>
+  <var name="course"/>
+
+  <var name="wizard" expr="'wizardAction'"/>
+  <var name="wall" expr="'wallAction'"/>
+  <var name="elephant" expr="'elephantAction'"/>
+  <var name="sumowrestler" expr="'sumoWrestlerAction'"/>
+  <var name="bomb" expr="'bombAction'"/>
+  <var name="dragon" expr="'dragonAction'"/>
+
+
+  <!-- Global commands  -->
+  <link next="#welcome">
+    <grammar xml:lang="en-US" root="LINKGRAM">
+      <rule id="LINKGRAM">
+        <one-of>
+          <item>start over</item>
+        </one-of>
+      </rule>
+    </grammar>
+  </link>
+
+  <link next="#menu">
+    <grammar xml:lang="en-US" root="LINKGRAM">
+      <rule id="LINKGRAM">
+        <one-of>
+          <item>menu</item>
+          <item>main menu</item>
+	  <item>home</item>
+        </one-of>
+      </rule>
+    </grammar>
+  </link>
+
+
+  <!-- No match events  -->  
+  <nomatch>
+    I'm sorry, I didn't catch that. Could you say it again, please?
+  </nomatch>
+
+  <noinput>
+    I couldn't seem to hear you. Could you try again, please?
+  </noinput>
+
+
+  <!-- Menu  -->
+  <menu id="menu">
+      
+      <prompt>
+          Welcome to the Obstacle Course! Do you want to hear the rules, or learn about your options, or play the game, or quit?
+      </prompt>
+      
+      <choice next="#gamepreferences">Play the game</choice>
+      <choice next="#options">Learn my options</choice>
+      <choice next="#rules">Hear the rules</choice>      
+      <choice next="#quit">Quit</choice>
+      
+      <nomatch>
+          I didn't understand. You can say Play the game or Hear the rules or Learn my options or Quit.
+          <reprompt/>
+      </nomatch>
+      
+      <noinput>
+          You didn't say anything. Do you want to play the game, or hear the rules, or learn about your options or quit?
+          <reprompt/>
+      </noinput>      
+      
+  </menu>
+
+
+  <!-- Hear the rules  -->
+  <form id="rules">
+    <block>
+      <prompt>
+        <break time="1000" />
+	The rules are simple. You are entering a course with three obstacles. To win, you have to pass them all without failing too many times. I'll guide you through the course. Listen closely and choose what to do in every situation. Just remember... choose wisely. 
+      </prompt>
+      <goto next="#menu"/>
+    </block>
+  </form>  
+
+
+  <!-- Learn about the options  -->
+  <form id="options">
+    <block>
+      <prompt>
+        <break time="1000" />
+	You can choose between two courses, the nice course and the nasty course.
+	You can choose to play as three different characters, Hermione, Humpty Dumpty and Hannibal.
+      </prompt>
+      <goto next="#menu"/>
+    </block>
+  </form>  
+
+
+  <form id="gamepreferences">
+
+   <grammar src="grammars/project.xml" root="GAME"/>
+
+    <!-- Initial  -->
+    <initial name="preferences">
+      <prompt bargein="False">Time to play! What course and character would you like?</prompt>
+
+      <nomatch>
+        <prompt>You can choose your course and your character.</prompt>
+      </nomatch>
+
+      <nomatch count="2">
+        <prompt>You can say for example I want to play the nice course as Humpty Dumpty.</prompt>
+      </nomatch>
+
+      <nomatch count="3">
+        <prompt>I'm not sure I caught that. I'll ask you about the course and the character separately.</prompt>
+        <assign name="preferences" expr="true"/>
+        <reprompt/>
+      </nomatch>
+
+    </initial>
+
+    <!-- Single fields  -->
+    <field name="courseChoice">
+    <grammar src="grammars/project.xml#COURSE"/>
+      <prompt bargein="False">What course do you want to play?</prompt>
+      <prompt count="2">You can choose between the nice course and the nasty course.</prompt>
+    </field>
+
+    <field name="characterChoice">
+    <grammar src="grammars/project.xml#CHARACTER"/>
+      <prompt>Who do you want to play as?</prompt>
+      <prompt count="2">You can choose between Hermione, Humpty Dumpty or Hannibal.</prompt>
+    </field>
+
+    <filled>
+      <assign name="course" expr="courseChoice"/>
+      <assign name="character" expr="characterChoice"/>
+      <assign name="character" expr="characterChoice"/>
+      <goto next="#welcome"/>
+    </filled>
+
+  </form>
+
+
+  <!-- Welcome message  -->
+  <form id="welcome">
+    <block>
+      <prompt>
+        <break time="1000" />
+        Welcome to the <value expr="course"/>, <value expr="character"/>! Let's play!
+      </prompt>
+
+      <if cond="course=='nice course'">
+	<assign name="triesLeft" expr="5"/>
+	<prompt>You have <value expr="triesLeft"/> tries to make it through. For each obstacle, you can either climb, bow and shake or use a chainsaw. </prompt>
+	<goto next="#niceCourse" />
+      </if>
+      <assign name="triesLeft" expr="3"/>
+      <prompt>You have <value expr="triesLeft"/> tries to make it through. For each obstacle, you can either cast a spell, run and hide or offer food. </prompt>
+      <goto next="#nastyCourse"/>
+
+    </block>
+  </form>
+
+
+  <!-- Nice course  -->
+  <form id="niceCourse">
+
+    <!-- Wizard  -->
+    <field name="wizardAction">
+    <grammar src="grammars/project.xml#WIZARD"/>
+      <prompt bargein="False">
+	<break time="1000" />
+	You meet with an old and mighty wizard. What do you do?
+      </prompt>
+      <prompt count="2">You can climb, bow and shake or use a chainsaw</prompt>
+    </field>
+    <filled namelist="wizardAction">
+      <if cond="wizardAction=='bow'">
+	<prompt>The wizard says, Have a nice day! and lets you pass.</prompt>
+	<goto expritem="wall"/>
+	<elseif cond="wizardAction=='climb'"/>
+	<prompt>No. He is too old and will probably die.</prompt>
+	<elseif cond="wizardAction=='chainsaw'"/>
+	<prompt>No! You cannot be that blood-thirsty!</prompt>
+      </if>
+      <assign name="triesLeft" expr="triesLeft - 1"/>
+      <if cond="triesLeft == 0">
+	<prompt>Oh no, you died! </prompt>
+	<goto next="#end"/>
+      </if>
+      <prompt>You now have <value expr="triesLeft"/> tries left. Don't be foolish now.</prompt>
+      <goto expritem="wizard"/>
+    </filled>
+    
+
+    <!-- Wall  -->
+    <field name="wallAction">
+    <grammar src="grammars/project.xml#WALL"/>
+      <prompt bargein="False">
+	<break time="1000" />
+	Now you are standing in front of a huge wall. What do you do?
+      </prompt>
+      <prompt count="2">You can climb, bow and shake or use a chainsaw</prompt>
+    </field>
+    <filled namelist="wallAction">
+      <if cond="wallAction=='chainsaw'">
+	<prompt>Yes! The chainsaw gets you through!</prompt>
+	<goto expritem="elephant"/>
+	<elseif cond="wallAction=='climb'"/>
+	<prompt>Sorry, the wall is too high.</prompt>
+	<elseif cond="wallAction=='bow'"/>
+	<prompt>How do you shake hands with a wall?</prompt>
+      </if>
+      <assign name="triesLeft" expr="triesLeft - 1"/>
+      <if cond="triesLeft == 0">
+	<prompt>Oh no, you died! </prompt>
+	<goto next="#end"/>
+      </if>
+      <prompt>You now have <value expr="triesLeft"/> tries left. Choose your next move wisely.</prompt>
+      <goto expritem="wall"/>
+    </filled>
+
+
+    <!-- Elephant  -->
+    <field name="elephantAction">
+    <grammar src="grammars/project.xml#ELEPHANT"/>
+      <prompt bargein="False">
+	<break time="1000" />
+	You are now standing in front of an enormous Indian elephant. What do you do?
+      </prompt>
+      <prompt count="2">You can climb, bow and shake or use a chainsaw</prompt>
+    </field>
+    <filled namelist="elephantAction">
+      <if cond="elephantAction=='climb'">
+	<prompt>Congratulations! You are now riding the elephant!</prompt>
+	<goto next="#finished"/>
+	<elseif cond="elephantAction=='chainsaw'"/>
+	<prompt>Oh no! That's too cruel!</prompt>
+	<elseif cond="elephantAction=='bow'"/>
+	<prompt>Shake foots, you mean? No, this is ridiculous!</prompt>
+      </if>
+      <assign name="triesLeft" expr="triesLeft - 1"/>
+      <if cond="triesLeft == 0">
+	<prompt>Oh no, you died! </prompt>
+	<goto next="#end"/>
+      </if>
+      <prompt>You now have <value expr="triesLeft"/> tries left. Now I'd be really careful if I were you.</prompt>
+      <goto expritem="elephant"/>
+    </filled>
+
+  </form>
+
+
+  <!-- Nasty course  -->
+  <form id="nastyCourse">
+
+    <!-- Sumo wrestler  -->
+    <field name="sumoWrestlerAction">
+    <grammar src="grammars/project.xml#SUMOWRESTLER"/>
+      <prompt bargein="False">
+	<break time="1000" />
+	You encounter a 256 kg sumo wrestler. What do you do?
+      </prompt>
+      <prompt count="2">You can run and hide, offer food or cast a spell.</prompt>
+    </field>
+    <filled namelist="sumoWrestlerAction">
+      <if cond="sumoWrestlerAction=='food'">
+	<prompt>You pass silently while the Sumo concentrates on eating.</prompt>
+	<goto expritem="bomb"/>
+	<elseif cond="sumoWrestlerAction=='run'"/>
+	<prompt>This will not help you pass.</prompt>
+	<elseif cond="sumoWrestlerAction=='spell'"/>
+	<prompt>Such Mambo-Jambo doesn't work with a real Sumo!</prompt>
+      </if>
+      <assign name="triesLeft" expr="triesLeft - 1"/>
+      <if cond="triesLeft == 0">
+	<prompt>Oh no, you died! </prompt>
+	<goto next="#end"/>
+      </if>
+      <prompt>You now have <value expr="triesLeft"/> tries left. Watch out!</prompt>
+      <goto expritem="sumowrestler"/>
+    </filled>
+    
+    <!-- Bomb  -->
+    <field name="bombAction">
+    <grammar src="grammars/project.xml#BOMB"/>
+      <prompt bargein="False">
+	<break time="1000" />
+	You stumble over a smoking package labeled TNT Explosives. What do you do?
+      </prompt>
+      <prompt count="2">You can run and hide, offer food or cast a spell.</prompt>
+    </field>
+    <filled namelist="bombAction">
+      <if cond="bombAction=='run'">
+	<prompt>You got away with come injuries. You can continue.</prompt>
+	<goto expritem="dragon"/>
+	<elseif cond="bombAction=='food'"/>
+	<prompt>Bombs don't eat, do they?</prompt>
+	<elseif cond="bombAction=='spell'"/>
+	<prompt>That doesn't help with a bomb.</prompt>
+      </if>
+      <assign name="triesLeft" expr="triesLeft - 1"/>
+      <if cond="triesLeft == 0">
+	<prompt>Oh no, you died! </prompt>
+	<goto next="#end"/>
+      </if>
+      <prompt>You now have <value expr="triesLeft"/> tries left. Think ahead!</prompt>
+      <goto expritem="bomb"/>
+    </filled>
+
+    <!-- Dragon -->
+    <field name="dragonAction">
+    <grammar src="grammars/project.xml#DRAGON"/>
+      <prompt bargein="False">
+	<break time="1000" />
+	You encounter a red-eyed dragon with 10 inch teeth and smoking nostrils. What do you do?
+      </prompt>
+      <prompt count="2">You can run and hide, offer food or cast a spell.</prompt>
+    </field>
+    <filled namelist="dragonAction">
+      <if cond="dragonAction=='spell'">
+	<prompt>You are lucky! The dragon instantly turned into a frog!</prompt>
+	<goto next="#finished"/>
+	<elseif cond="dragonAction=='run'"/>
+	<prompt>Running will only buy you some time.</prompt>
+	<elseif cond="dragonAction=='food'"/>
+	<prompt>You can only feed a dragon with yourself.</prompt>
+      </if>
+      <assign name="triesLeft" expr="triesLeft - 1"/>
+      <if cond="triesLeft == 0">
+	<prompt>Oh no, you died! </prompt>
+	<goto next="#end"/>
+      </if>
+      <prompt>You now have <value expr="triesLeft"/> tries left. Don't do anything stupid.</prompt>
+      <goto expritem="dragon"/>
+    </filled>
+
+  </form>
+  
+  <!-- Congratulations message  -->  
+  <form id="finished">
+    <block>
+      <prompt>
+        <break time="2000" />
+	Well done, <value expr="character"/>! You made it through the <value expr="course"/> alive!
+      </prompt>
+      <goto next="#menu"/>
+    </block>
+  </form>  
+
+  <!-- End message  -->  
+  <form id="end">
+    <field name="playAgain" type="boolean">
+      <prompt bargein="False">                                                                                                                                                      
+        <break time="1000" />
+	You didn't make it through, <value expr="character"/>. I wonder what made you stumble...
+	I'm sorry but your journey on the <value expr="course"/> ends here. Do you want to make another try?
+      </prompt>
+    </field>
+
+    <filled>
+      <if cond="playAgain">
+	<prompt>
+          <break time="2000" />
+	  <goto next="#menu"/>
+	</prompt>
+      </if>
+      Okay, goodbye.
+      <exit/>
+    </filled>
+  </form>  
+
+  
+</vxml>
