@@ -80,6 +80,13 @@ def lab4():
     response.headers["Content-Type"] = "application/xml"
     return response
 
+@app.route('/project')
+def project():
+    vxml = render_template('project.xml', temp=temp)
+    response = make_response(vxml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
 @app.route('/grammars/<path:path>')
 def send_grammar(path):
     return send_from_directory('grammars', path)
