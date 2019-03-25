@@ -1,4 +1,4 @@
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
       xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
 
@@ -53,7 +53,7 @@
   <menu id="menu">
       
       <prompt>
-          Welcome to the Obstacle Course! Do you want to hear the rules, or learn about your options, or play the game, or quit?
+          Welcome to the <emphasis>Obstacle Course!</emphasis> Do you want to <emphasis>hear the rules</emphasis>, <emphasis>learn about your options</emphasis>, <emphasis>play the game</emphasis>, or <emphasis>quit</emphasis>?
       </prompt>
       
       <choice next="#gamepreferences">Play the game</choice>
@@ -91,8 +91,8 @@
     <block>
       <prompt>
         <break time="1000" />
-	You can choose between two courses, the nice course and the nasty course.
-	You can choose to play as three different characters, Hermione, Humpty Dumpty and Hannibal.
+	You can choose between two courses, the <emphasis>nice course</emphasis> and the <emphasis>nasty course</emphasis>.
+	You can choose to play as three different characters, <emphasis>Hermione</emphasis>, <emphasis>Humpty Dumpty</emphasis> and <emphasis>Hannibal</emphasis>.
       </prompt>
       <goto next="#menu"/>
     </block>
@@ -105,14 +105,14 @@
 
     <!-- Initial  -->
     <initial name="preferences">
-      <prompt bargein="False">Time to play! What course and character would you like?</prompt>
+      <prompt bargein="False"><prosody rate="-3st" contour="(90%, +20Hz)">Time to play! What course and character would you like?</prosody></prompt>
 
       <nomatch>
-        <prompt>You can choose your course and your character.</prompt>
+        <prompt>You can choose your <emphasis>course</emphasis> and your <emphasis>character</emphasis>.</prompt>
       </nomatch>
 
       <nomatch count="2">
-        <prompt>You can say for example I want to play the nice course as Humpty Dumpty.</prompt>
+        <prompt>You can say for example <break strength="x-weak"/>I want to play the nice course as Humpty Dumpty.</prompt>
       </nomatch>
 
       <nomatch count="3">
@@ -126,13 +126,13 @@
     <!-- Single fields  -->
     <field name="courseChoice">
     <grammar src="grammars/project.xml#COURSE"/>
-      <prompt bargein="False">What course do you want to play?</prompt>
+      <prompt bargein="False"><prosody rate="-3st" contour="(90%, +20Hz)">What course do you want to play?</prosody></prompt>
       <prompt count="2">You can choose between the nice course and the nasty course.</prompt>
     </field>
 
     <field name="characterChoice">
     <grammar src="grammars/project.xml#CHARACTER"/>
-      <prompt>Who do you want to play as?</prompt>
+      <prompt><prosody rate="-5st" contour="(85%, +20Hz)">Who do you want to play as?</prosody></prompt>
       <prompt count="2">You can choose between Hermione, Humpty Dumpty or Hannibal.</prompt>
     </field>
 
@@ -156,11 +156,11 @@
 
       <if cond="course=='nice course'">
 	<assign name="triesLeft" expr="5"/>
-	<prompt>You have <value expr="triesLeft"/> tries to make it through. For each obstacle, you can either climb, bow and shake or use a chainsaw. </prompt>
+	<prompt>You have <emphasis><value expr="triesLeft"/></emphasis> tries to make it through.<break strength="weak"/> For each obstacle, you can either<emphasis> climb</emphasis>, <emphasis>bow and shake</emphasis> or <emphasis>use a chainsaw</emphasis>. </prompt>
 	<goto next="#niceCourse" />
       </if>
       <assign name="triesLeft" expr="3"/>
-      <prompt>You have <value expr="triesLeft"/> tries to make it through. For each obstacle, you can either cast a spell, run and hide or offer food. </prompt>
+      <prompt>You have <emphasis><value expr="triesLeft"/></emphasis> tries to make it through. <break strength="weak"/> For each obstacle, you can either <emphasis>cast a spell</emphasis>, <emphasis>run and hide</emphasis> or <emphasis>offer food</emphasis>. </prompt>
       <goto next="#nastyCourse"/>
 
     </block>
@@ -175,25 +175,25 @@
     <grammar src="grammars/project.xml#WIZARD"/>
       <prompt bargein="False">
 	<break time="1000" />
-	You meet with an old and mighty wizard. What do you do?
+	You meet with an old and mighty wizard. <break strength="weak"/> What do you do?
       </prompt>
-      <prompt count="2">You can climb, bow and shake or use a chainsaw</prompt>
+      <prompt count="2">You can <emphasis> climb</emphasis>, <emphasis>bow and shake</emphasis> or <emphasis>use a chainsaw</emphasis></prompt> 
     </field>
     <filled namelist="wizardAction">
       <if cond="wizardAction=='bow'">
-	<prompt>The wizard says, Have a nice day! and lets you pass.</prompt>
+	<prompt>The wizard says, <break strength="weak"/> Have a nice day! <break strength="weak"/> and lets you pass.</prompt>
 	<goto expritem="wall"/>
 	<elseif cond="wizardAction=='climb'"/>
-	<prompt>No. He is too old and will probably die.</prompt>
+	<prompt><emphasis>No.</emphasis> <break strength="weak"/> He is too old and will probably die.</prompt>
 	<elseif cond="wizardAction=='chainsaw'"/>
-	<prompt>No! You cannot be that blood-thirsty!</prompt>
+	<prompt><emphasis>No!</emphasis> You cannot be that blood-thirsty!</prompt>
       </if>
       <assign name="triesLeft" expr="triesLeft - 1"/>
       <if cond="triesLeft == 0">
 	<prompt>Oh no, you died! </prompt>
 	<goto next="#end"/>
       </if>
-      <prompt>You now have <value expr="triesLeft"/> tries left. Don't be foolish now.</prompt>
+      <prompt>You now have <emphasis><value expr="triesLeft"/></emphasis> tries left. Don't be foolish.</prompt>
       <goto expritem="wizard"/>
     </filled>
     
@@ -203,25 +203,25 @@
     <grammar src="grammars/project.xml#WALL"/>
       <prompt bargein="False">
 	<break time="1000" />
-	Now you are standing in front of a huge wall. What do you do?
+	Now you are standing in front of a huge wall. <break strength="weak"/>  What do you do?
       </prompt>
-      <prompt count="2">You can climb, bow and shake or use a chainsaw</prompt>
+      <prompt count="2">You can <emphasis> climb</emphasis>, <emphasis>bow and shake</emphasis> or <emphasis>use a chainsaw</emphasis></prompt> 
     </field>
     <filled namelist="wallAction">
       <if cond="wallAction=='chainsaw'">
-	<prompt>Yes! The chainsaw gets you through!</prompt>
+	<prompt><emphasis>Yes!</emphasis> <break strength="weak"/> The chainsaw gets you through!</prompt>
 	<goto expritem="elephant"/>
 	<elseif cond="wallAction=='climb'"/>
 	<prompt>Sorry, the wall is too high.</prompt>
 	<elseif cond="wallAction=='bow'"/>
-	<prompt>How do you shake hands with a wall?</prompt>
+	<prompt><prosody rate="-5st" pitch="+1st">How do you shake hands with a <emphasis>wall?</emphasis></prosody></prompt>
       </if>
       <assign name="triesLeft" expr="triesLeft - 1"/>
       <if cond="triesLeft == 0">
 	<prompt>Oh no, you died! </prompt>
 	<goto next="#end"/>
       </if>
-      <prompt>You now have <value expr="triesLeft"/> tries left. Choose your next move wisely.</prompt>
+      <prompt>You now have <emphasis><value expr="triesLeft"/></emphasis> tries left. Choose your next move <emphasis>wisely.</emphasis></prompt>
       <goto expritem="wall"/>
     </filled>
 
@@ -231,25 +231,25 @@
     <grammar src="grammars/project.xml#ELEPHANT"/>
       <prompt bargein="False">
 	<break time="1000" />
-	You are now standing in front of an enormous Indian elephant. What do you do?
+	You now stand face to face with <emphasis>enormous</emphasis> Indian elephant.<break strength="weak"/>  What do you do?
       </prompt>
-      <prompt count="2">You can climb, bow and shake or use a chainsaw</prompt>
+      <prompt count="2">You can <emphasis> climb</emphasis>, <emphasis>bow and shake</emphasis> or <emphasis>use a chainsaw</emphasis></prompt> 
     </field>
     <filled namelist="elephantAction">
       <if cond="elephantAction=='climb'">
 	<prompt>Congratulations! You are now riding the elephant!</prompt>
 	<goto next="#finished"/>
 	<elseif cond="elephantAction=='chainsaw'"/>
-	<prompt>Oh no! That's too cruel!</prompt>
+	<prompt><emphasis>Oh no!</emphasis> <break strength="weak"/> That's too cruel!</prompt>
 	<elseif cond="elephantAction=='bow'"/>
-	<prompt>Shake foots, you mean? No, this is ridiculous!</prompt>
+	<prompt><prosody rate="-10st" pitch="+1st">Shake <emphasis>foot</emphasis>, you mean?</prosody> No, this is ridiculous!</prompt>
       </if>
       <assign name="triesLeft" expr="triesLeft - 1"/>
       <if cond="triesLeft == 0">
 	<prompt>Oh no, you died! </prompt>
 	<goto next="#end"/>
       </if>
-      <prompt>You now have <value expr="triesLeft"/> tries left. Now I'd be really careful if I were you.</prompt>
+      <prompt>You now have <emphasis><value expr="triesLeft"/></emphasis> tries left. Now I'd be <emphasis>really</emphasis> careful if I were you.</prompt>
       <goto expritem="elephant"/>
     </filled>
 
@@ -264,25 +264,25 @@
     <grammar src="grammars/project.xml#SUMOWRESTLER"/>
       <prompt bargein="False">
 	<break time="1000" />
-	You encounter a 256 kg sumo wrestler. What do you do?
+	You encounter a 256 kg <emphasis>sumo wrestler</emphasis>.<break strength="weak"/> What do you do?
       </prompt>
-      <prompt count="2">You can run and hide, offer food or cast a spell.</prompt>
+      <prompt count="2">You can <emphasis> run and hide</emphasis>, <emphasis>offer food</emphasis> or <emphasis>cast a spell</emphasis></prompt> 
     </field>
     <filled namelist="sumoWrestlerAction">
       <if cond="sumoWrestlerAction=='food'">
-	<prompt>You pass silently while the Sumo concentrates on eating.</prompt>
+	<prompt><emphasis>Ingenious!</emphasis> You pass silently <break strength="weak"/> while the Sumo concentrates on eating.</prompt>
 	<goto expritem="bomb"/>
 	<elseif cond="sumoWrestlerAction=='run'"/>
-	<prompt>This will not help you pass.</prompt>
+	<prompt>This will <emphasis>not</emphasis> help you pass.</prompt>
 	<elseif cond="sumoWrestlerAction=='spell'"/>
-	<prompt>Such Mambo-Jambo doesn't work with a real Sumo!</prompt>
+	<prompt>Such Mambo-Jambo doesn't work with a <emphasis>real</emphasis> Sumo!</prompt>
       </if>
       <assign name="triesLeft" expr="triesLeft - 1"/>
       <if cond="triesLeft == 0">
 	<prompt>Oh no, you died! </prompt>
 	<goto next="#end"/>
       </if>
-      <prompt>You now have <value expr="triesLeft"/> tries left. Watch out!</prompt>
+      <prompt>You now have <emphasis><value expr="triesLeft"/></emphasis> tries left. Watch out!</prompt>
       <goto expritem="sumowrestler"/>
     </filled>
     
@@ -291,25 +291,25 @@
     <grammar src="grammars/project.xml#BOMB"/>
       <prompt bargein="False">
 	<break time="1000" />
-	You stumble over a smoking package labeled TNT Explosives. What do you do?
+	<emphasis>Whoa!</emphasis> You stumble over a smoking package labeled <emphasis>TNT Explosives.</emphasis> <break strength="weak"/> What do you do?
       </prompt>
-      <prompt count="2">You can run and hide, offer food or cast a spell.</prompt>
+      <prompt count="2">You can <emphasis> run and hide</emphasis>, <emphasis>offer food</emphasis> or <emphasis>cast a spell</emphasis></prompt> 
     </field>
     <filled namelist="bombAction">
       <if cond="bombAction=='run'">
-	<prompt>You got away with come injuries. You can continue.</prompt>
+	<prompt>You got away with minor injuries. <break strength="weak"/> You can continue.</prompt>
 	<goto expritem="dragon"/>
 	<elseif cond="bombAction=='food'"/>
-	<prompt>Bombs don't eat, do they?</prompt>
+	<prompt><prosody rate="-10st" pitch="+1st">Bombs don't eat, do they?</prosody></prompt>
 	<elseif cond="bombAction=='spell'"/>
-	<prompt>That doesn't help with a bomb.</prompt>
+	<prompt>That doesn't help with a <emphasis>bomb.</emphasis></prompt>
       </if>
       <assign name="triesLeft" expr="triesLeft - 1"/>
       <if cond="triesLeft == 0">
 	<prompt>Oh no, you died! </prompt>
 	<goto next="#end"/>
       </if>
-      <prompt>You now have <value expr="triesLeft"/> tries left. Think ahead!</prompt>
+      <prompt>You now have <emphasis><value expr="triesLeft"/></emphasis> tries left. Think ahead!</prompt>
       <goto expritem="bomb"/>
     </filled>
 
@@ -318,25 +318,25 @@
     <grammar src="grammars/project.xml#DRAGON"/>
       <prompt bargein="False">
 	<break time="1000" />
-	You encounter a red-eyed dragon with 10 inch teeth and smoking nostrils. What do you do?
+	You encounter a <emphasis>red-eyed dragon</emphasis> with 10 inch teeth and smoking nostrils.<break strength="weak"/> What do you do?
       </prompt>
-      <prompt count="2">You can run and hide, offer food or cast a spell.</prompt>
+      <prompt count="2">You can <emphasis> run and hide</emphasis>, <emphasis>offer food</emphasis> or <emphasis>cast a spell</emphasis></prompt> 
     </field>
     <filled namelist="dragonAction">
       <if cond="dragonAction=='spell'">
 	<prompt>You are lucky! The dragon instantly turned into a frog!</prompt>
 	<goto next="#finished"/>
 	<elseif cond="dragonAction=='run'"/>
-	<prompt>Running will only buy you some time.</prompt>
+	<prompt><emphasis>Running</emphasis> will only buy you some time.</prompt>
 	<elseif cond="dragonAction=='food'"/>
-	<prompt>You can only feed a dragon with yourself.</prompt>
+	<prompt>You can only feed a dragon with <emphasis>yourself</emphasis>.</prompt>
       </if>
       <assign name="triesLeft" expr="triesLeft - 1"/>
       <if cond="triesLeft == 0">
 	<prompt>Oh no, you died! </prompt>
 	<goto next="#end"/>
       </if>
-      <prompt>You now have <value expr="triesLeft"/> tries left. Don't do anything stupid.</prompt>
+      <prompt>You now have <emphasis><value expr="triesLeft"/></emphasis> tries left. Don't do anything stupid.</prompt>
       <goto expritem="dragon"/>
     </filled>
 
@@ -358,8 +358,8 @@
     <field name="playAgain" type="boolean">
       <prompt bargein="False">                                                                                                                                                      
         <break time="1000" />
-	You didn't make it through, <value expr="character"/>. I wonder what made you stumble...
-	I'm sorry but your journey on the <value expr="course"/> ends here. Do you want to make another try?
+	You didn't make it through, <value expr="character"/>. I wonder what made you stumble... <break strength="weak"/>
+	I'm sorry but your journey on the <break strength="weak"/> <value expr="course"/> ends here. <prosody rate="-5st" contour="(85%, +20Hz)">Do you want to make another try?</prosody>
       </prompt>
     </field>
 
@@ -375,5 +375,13 @@
     </filled>
   </form>  
 
+
+  <form id="quit">
+    <block>
+      <break time="2000" />                                                                                                                                                       
+	Okay, goodbye.
+	<exit/>
+    </block>
+  </form>
   
 </vxml>
